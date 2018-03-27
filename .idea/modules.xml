@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Kenticoandroidtvapp.iml" filepath="$PROJECT_DIR$/Kenticoandroidtvapp.iml" />
+      <module fileurl="file://D:\Kenticoandroidtvapp\kentico-android-tv-app\Kenticoandroidtvapp.iml" filepath="D:\Kenticoandroidtvapp\kentico-android-tv-app\Kenticoandroidtvapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kentico-android-tv-app.iml" filepath="$PROJECT_DIR$/kentico-android-tv-app.iml" />
     </modules>
   </component>
 </project>
