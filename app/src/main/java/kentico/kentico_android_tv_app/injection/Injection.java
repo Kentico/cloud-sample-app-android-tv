@@ -10,16 +10,11 @@
 
 package kentico.kentico_android_tv_app.injection;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-
 import com.kenticocloud.delivery_android.DeliveryAndroidService;
 import com.kenticocloud.delivery_core.config.DeliveryConfig;
 import com.kenticocloud.delivery_core.services.IDeliveryService;
 
 import kentico.kentico_android_tv_app.config.AppConfig;
-import kentico.kentico_android_tv_app.data.source.articles.ArticlesCloudSource;
-import kentico.kentico_android_tv_app.data.source.articles.ArticlesRepository;
 
 /**
  * Enables injection of production implementations at compile time.
@@ -27,18 +22,6 @@ import kentico.kentico_android_tv_app.data.source.articles.ArticlesRepository;
 public class Injection {
 
     private static IDeliveryService deliveryService = new DeliveryAndroidService(new DeliveryConfig(AppConfig.KENTICO_CLOUD_PROJECT_ID, AppConfig.getTypeResolvers()));
-
-    public static ArticlesRepository provideArticlesRepository(@NonNull Context context) {
-        return ArticlesRepository.getInstance(ArticlesCloudSource.getInstance(context));
-    }
-
-//    public static CafesRepository provideCafessRepository(@NonNull Context context) {
-//        return CafesRepository.getInstance(CafesCloudSource.getInstance(context));
-//    }
-//
-//    public static CoffeesRepository provideCoffeesRepository(@NonNull Context context) {
-//        return CoffeesRepository.getInstance(CoffeesCloudSource.getInstance(context));
-//    }
 
     public static IDeliveryService provideDeliveryService() {
         return Injection.deliveryService;

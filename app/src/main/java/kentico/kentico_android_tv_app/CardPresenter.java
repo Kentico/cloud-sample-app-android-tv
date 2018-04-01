@@ -4,7 +4,6 @@ package kentico.kentico_android_tv_app;
  * Created by Juraj on 27.03.2018.
  */
 
-import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.util.Log;
@@ -25,12 +24,10 @@ public class CardPresenter extends Presenter {
     private static final int CARD_HEIGHT = 176;
     private static int sSelectedBackgroundColor;
     private static int sDefaultBackgroundColor;
-    private Drawable mDefaultCardImage;
 
     private static void updateCardBackgroundColor(ImageCardView view, boolean selected) {
         int color = selected ? sSelectedBackgroundColor : sDefaultBackgroundColor;
-        // Both background colors should be set because the view's background is temporarily visible
-        // during animations.
+
         view.setBackgroundColor(color);
         view.findViewById(R.id.info_field).setBackgroundColor(color);
     }
@@ -41,11 +38,6 @@ public class CardPresenter extends Presenter {
 
         sDefaultBackgroundColor = parent.getResources().getColor(R.color.default_background);
         sSelectedBackgroundColor = parent.getResources().getColor(R.color.selected_background);
-        /*
-         * This template uses a default image in res/drawable, but the general case for Android TV
-         * will require your resources in xhdpi. For more information, see
-         * https://developer.android.com/training/tv/start/layouts.html#density-resources
-         */
 
         ImageCardView cardView = new ImageCardView(parent.getContext()) {
             @Override
@@ -67,12 +59,12 @@ public class CardPresenter extends Presenter {
         ImageCardView cardView = (ImageCardView) viewHolder.view;
 
         Log.d(TAG, "onBindViewHolder");
-        if (article != null) {
+        if (article.teaserImage != null) {
             cardView.setTitleText(article.getTitle());
             cardView.setContentText(article.getSummary());
             cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
             Glide.with(viewHolder.view.getContext())
-                    .load(article.teaserImage)
+                    .load(article.getTeaserImageUrl())
                     .centerCrop()
                     .into(cardView.getMainImageView());
         }
@@ -82,7 +74,6 @@ public class CardPresenter extends Presenter {
     public void onUnbindViewHolder(Presenter.ViewHolder viewHolder) {
         Log.d(TAG, "onUnbindViewHolder");
         ImageCardView cardView = (ImageCardView) viewHolder.view;
-        // Remove references to images so that the garbage collector can free up memory
         cardView.setBadgeImage(null);
         cardView.setMainImage(null);
     }

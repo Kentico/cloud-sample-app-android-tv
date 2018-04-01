@@ -13,13 +13,11 @@ package kentico.kentico_android_tv_app.data.models;
 import com.kenticocloud.delivery_core.elements.AssetsElement;
 import com.kenticocloud.delivery_core.elements.DateTimeElement;
 import com.kenticocloud.delivery_core.elements.ModularContentElement;
-import com.kenticocloud.delivery_core.elements.MultipleChoiceElement;
 import com.kenticocloud.delivery_core.elements.RichTextElement;
 import com.kenticocloud.delivery_core.elements.TaxonomyElement;
 import com.kenticocloud.delivery_core.elements.TextElement;
 import com.kenticocloud.delivery_core.elements.models.AssetModel;
 import com.kenticocloud.delivery_core.elements.models.ElementsTaxonomyTerms;
-import com.kenticocloud.delivery_core.elements.models.MultipleChoiceOption;
 import com.kenticocloud.delivery_core.models.item.ContentItem;
 import com.kenticocloud.delivery_core.models.item.ElementMapping;
 
@@ -47,9 +45,6 @@ public final class Article extends ContentItem {
 
     @ElementMapping("personas")
     public TaxonomyElement personas;
-
-    @ElementMapping("category")
-    public MultipleChoiceElement category;
 
     @ElementMapping("related_articles")
     public ModularContentElement<Article> relatedArticles;
@@ -84,8 +79,6 @@ public final class Article extends ContentItem {
     }
 
     public ElementsTaxonomyTerms[] getPersonas() { return personas.getValue(); }
-
-    public MultipleChoiceOption[] getCategories() { return category.getValue(); }
 
     public ArrayList<Article> getRelatedArticles() { return relatedArticles.getValue(); }
 }

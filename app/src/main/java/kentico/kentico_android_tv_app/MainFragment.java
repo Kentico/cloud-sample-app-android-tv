@@ -1,6 +1,7 @@
 package kentico.kentico_android_tv_app;
 
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v17.leanback.app.BackgroundManager;
@@ -10,18 +11,16 @@ import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
-import com.kenticocloud.delivery_android.DeliveryAndroidService;
 import com.kenticocloud.delivery_core.query.item.MultipleItemQuery;
 import com.kenticocloud.delivery_core.services.IDeliveryService;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
-import kentico.kentico_android_tv_app.config.AppConfig;
 import kentico.kentico_android_tv_app.data.models.Article;
-import kentico.kentico_android_tv_app.data.source.articles.ArticlesRepository;
 import kentico.kentico_android_tv_app.injection.Injection;
 
 /**
@@ -45,7 +44,7 @@ public class MainFragment extends BrowseFragment {
     private String mBackgroundUri;
     private BackgroundManager mBackgroundManager;
 
-    private IDeliveryService deliveryService = Injection.provideDeliveryService();
+    private IDeliveryService deliveryService;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class MainFragment extends BrowseFragment {
 
         setupUIElements();
 
-        loadRows();
+        new Connection().execute();
     }
 
     @Override
@@ -83,36 +82,53 @@ public class MainFragment extends BrowseFragment {
         setSearchAffordanceColor(getResources().getColor(R.color.search_opaque));
     }
 
-    private void loadRows() {
-        MultipleItemQuery<Article> articlesQuery = deliveryService.items();
-
-        List<Article> list = articlesQuery.get().getItems();
-
+    private void loadRows(List<Article> articles) {
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         CardPresenter cardPresenter = new CardPresenter();
 
         int i;
-        for (i = 0; i < list.size(); i++) {
-            if (i != 0) {
-                Collections.shuffle(list);
+        for (i = 0; i < articles.size(); i++) {
+            ArrayObjectAdapter articlesRowAdapter = new ArrayObjectAdapter(cardPresenter);
+            for (int j = 0; j < articles.size(); j++) {
+                articlesRowAdapter.add(articles.get(j % 5));
             }
-            ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
-            for (int j = 0; j < list.size(); j++) {
-                listRowAdapter.add(list.get(j % 5));
-            }
-            HeaderItem header = new HeaderItem(i, list.get(i).getTitle());
-            mRowsAdapter.add(new ListRow(header, listRowAdapter));
+            HeaderItem header = new HeaderItem(i, articles.get(i).getTitle());
+            mRowsAdapter.add(new ListRow(header, articlesRowAdapter));
         }
-
-//        HeaderItem gridHeader = new HeaderItem(i, "PREFERENCES");
+//
+//        HeaderItem gridHeader = new HeaderItem(0, "PREFERENCES");
 //
 //        GridItemPresenter mGridPresenter = new GridItemPresenter();
 //        ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
-//        gridRowAdapter.add(getResources().getString(R.string.grid_view));
-//        gridRowAdapter.add(getString(R.string.error_fragment));
-//        gridRowAdapter.add(getResources().getString(R.string.personal_settings));
+//        gridRowAdapter.add("view");
+//        gridRowAdapter.add("error");
+//        gridRowAdapter.add("settings or whatever");
 //        mRowsAdapter.add(new ListRow(gridHeader, gridRowAdapter));
 
         setAdapter(mRowsAdapter);
+    }
+
+    private class Connection extends AsyncTask<Object, Object, List<Article>> {
+
+        @Override
+        protected List<Article> doInBackground(Object... arg0) {
+            List<Article> list = new ArrayList<>();
+
+            try {
+                deliveryService = Injection.provideDeliveryService();
+                MultipleItemQuery<Article> articlesQuery = deliveryService.<Article>items().type(Article.TYPE);
+
+                list =  articlesQuery.get().getItems();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(List<Article> list) {
+            loadRows(list);
+        }
+
     }
 }
