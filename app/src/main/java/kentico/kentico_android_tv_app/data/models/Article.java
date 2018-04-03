@@ -12,16 +12,12 @@ package kentico.kentico_android_tv_app.data.models;
 
 import com.kenticocloud.delivery_core.elements.AssetsElement;
 import com.kenticocloud.delivery_core.elements.DateTimeElement;
-import com.kenticocloud.delivery_core.elements.ModularContentElement;
 import com.kenticocloud.delivery_core.elements.RichTextElement;
-import com.kenticocloud.delivery_core.elements.TaxonomyElement;
 import com.kenticocloud.delivery_core.elements.TextElement;
 import com.kenticocloud.delivery_core.elements.models.AssetModel;
-import com.kenticocloud.delivery_core.elements.models.ElementsTaxonomyTerms;
 import com.kenticocloud.delivery_core.models.item.ContentItem;
 import com.kenticocloud.delivery_core.models.item.ElementMapping;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public final class Article extends ContentItem {
@@ -43,11 +39,11 @@ public final class Article extends ContentItem {
     @ElementMapping("post_date")
     public DateTimeElement postDate;
 
-    @ElementMapping("personas")
-    public TaxonomyElement personas;
+    //    @ElementMapping("personas")
+//    public TaxonomyElement personas;
 
-    @ElementMapping("related_articles")
-    public ModularContentElement<Article> relatedArticles;
+//    @ElementMapping("related_articles")
+//    public ModularContentElement<Article> relatedArticles;
 
     public String getTitle() {
         return title.getValue();
@@ -78,7 +74,7 @@ public final class Article extends ContentItem {
         return bodyCopy.getValue();
     }
 
-    public ElementsTaxonomyTerms[] getPersonas() { return personas.getValue(); }
+//    public ElementsTaxonomyTerms[] getPersonas() { return personas.getValue(); }
 
-    public ArrayList<Article> getRelatedArticles() { return relatedArticles.getValue(); }
+//    public ArrayList<Article> getRelatedArticles() { return relatedArticles.getValue(); }
 }

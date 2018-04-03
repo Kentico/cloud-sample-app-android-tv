@@ -1,4 +1,21 @@
 <resources>
     <string name="app_name">Kentico-android-tv-app</string>
     <string name="browse_title"><![CDATA[Dancing Goat]]></string>
+    <string name="related_movies">Related Videos</string>
+    <string name="grid_view">Grid View</string>
+    <string name="error_fragment">Error Fragment</string>
+    <string name="personal_settings">Personal Settings</string>
+    <string name="article_read_more">Read More</string>
+    <string name="article_about_us">About Us</string>
+    <string name="action_return_back">Return Back</string>
+    <string name="article">Article</string>
+    <string name="articles">Articles</string>
+    <string name="should_start">shouldStart</string>
+
+    <!-- Error messages -->
+    <string name="video_error_media_load_timeout">Media loading timed out</string>
+    <string name="video_error_server_inaccessible">Media server was not reachable</string>
+    <string name="video_error_unknown_error">Failed to load video</string>
+    <string name="error_fragment_message">An error occurred</string>
+    <string name="dismiss_error">Dismiss</string>
 </resources>
