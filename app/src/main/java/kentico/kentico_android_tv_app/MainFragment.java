@@ -130,7 +130,6 @@ public class MainFragment extends BrowseFragment {
 
         ArrayObjectAdapter cafesRowAdapter = new ArrayObjectAdapter(cardPresenter);
         for (int j = 0; j < cafes.size(); j++) {
-            Log.w("REBEKA", String.valueOf(cafes.size()));
             cafesRowAdapter.add(cafes.get(j));
         }
         HeaderItem header = new HeaderItem(0, getResources().getString(R.string.cafes));

@@ -8,6 +8,7 @@ import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -51,6 +52,10 @@ public class CardPresenter extends Presenter {
         cardView.setFocusable(true);
         cardView.setFocusableInTouchMode(true);
         updateCardBackgroundColor(cardView, false);
+
+        ((TextView) cardView.findViewById(R.id.title_text)).setTextColor(parent.getResources().getColor(R.color.card_text));
+        ((TextView) cardView.findViewById(R.id.content_text)).setTextColor(parent.getResources().getColor(R.color.card_text));
+
         return new ViewHolder(cardView);
     }
 
