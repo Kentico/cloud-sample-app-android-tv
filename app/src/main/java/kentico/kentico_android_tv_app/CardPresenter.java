@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import kentico.kentico_android_tv_app.data.models.Article;
+import kentico.kentico_android_tv_app.data.models.Cafe;
 
 /*
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
@@ -55,18 +56,36 @@ public class CardPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
-        Article article = (Article) item;
-        ImageCardView cardView = (ImageCardView) viewHolder.view;
+        if (item.getClass() == Article.class) {
+            Article article = (Article) item;
+            ImageCardView cardView = (ImageCardView) viewHolder.view;
 
-        Log.d(TAG, "onBindViewHolder");
-        if (article.teaserImage != null) {
-            cardView.setTitleText(article.getTitle());
-            cardView.setContentText(article.getSummary());
-            cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
-            Glide.with(viewHolder.view.getContext())
-                    .load(article.getTeaserImageUrl())
-                    .centerCrop()
-                    .into(cardView.getMainImageView());
+            Log.d(TAG, "onBindViewHolder");
+            if (article.teaserImage != null) {
+                cardView.setTitleText(article.getTitle());
+                cardView.setContentText(article.getSummary());
+                cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+                Glide.with(viewHolder.view.getContext())
+                        .load(article.getTeaserImageUrl())
+                        .centerCrop()
+                        .into(cardView.getMainImageView());
+            }
+        }
+
+        if (item.getClass() == Cafe.class) {
+            Cafe cafe = (Cafe) item;
+            ImageCardView cardView = (ImageCardView) viewHolder.view;
+
+            Log.d(TAG, "onBindViewHolder");
+            if (cafe.photo != null) {
+                cardView.setTitleText(cafe.getCountry());
+                cardView.setContentText(cafe.getAddress());
+                cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+                Glide.with(viewHolder.view.getContext())
+                        .load(cafe.getPhotoUrl())
+                        .centerCrop()
+                        .into(cardView.getMainImageView());
+            }
         }
     }
 

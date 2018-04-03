@@ -61,7 +61,7 @@ public class MainFragment extends BrowseFragment {
     private String mBackgroundUri;
     private BackgroundManager mBackgroundManager;
 
-    private IDeliveryService deliveryService;
+    private IDeliveryService deliveryService = Injection.provideDeliveryService();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -72,6 +72,7 @@ public class MainFragment extends BrowseFragment {
         setupUIElements();
 
         new ArticlesConnection().execute();
+        new CafesConnection().execute();
 
         setupEventListeners();
     }
@@ -106,7 +107,7 @@ public class MainFragment extends BrowseFragment {
 
         ArrayObjectAdapter articlesRowAdapter = new ArrayObjectAdapter(cardPresenter);
         for (int j = 0; j < articles.size(); j++) {
-            articlesRowAdapter.add(articles.get(j % 5));
+            articlesRowAdapter.add(articles.get(j));
         }
         HeaderItem header = new HeaderItem(0, getResources().getString(R.string.articles));
         mRowsAdapter.add(new ListRow(header, articlesRowAdapter));
@@ -121,8 +122,23 @@ public class MainFragment extends BrowseFragment {
 //        gridRowAdapter.add("settings or whatever");
 //        mRowsAdapter.add(new ListRow(gridHeader, gridRowAdapter));
 
+//        setAdapter(mRowsAdapter);
+    }
+
+    private void loadCafesRow(List<Cafe> cafes) {
+        CardPresenter cardPresenter = new CardPresenter();
+
+        ArrayObjectAdapter cafesRowAdapter = new ArrayObjectAdapter(cardPresenter);
+        for (int j = 0; j < cafes.size(); j++) {
+            Log.w("REBEKA", String.valueOf(cafes.size()));
+            cafesRowAdapter.add(cafes.get(j));
+        }
+        HeaderItem header = new HeaderItem(0, getResources().getString(R.string.cafes));
+        mRowsAdapter.add(new ListRow(header, cafesRowAdapter));
+
         setAdapter(mRowsAdapter);
     }
+
 
     private void setupEventListeners() {
         setOnSearchClickedListener(new View.OnClickListener() {
@@ -176,6 +192,10 @@ public class MainFragment extends BrowseFragment {
                 mBackgroundUri = ((Article) item).getTeaserImageUrl();
                 startBackgroundTimer();
             }
+            if (item instanceof Cafe) {
+                mBackgroundUri = ((Cafe) item).getPhotoUrl();
+                startBackgroundTimer();
+            }
         }
     }
 
@@ -225,9 +245,7 @@ public class MainFragment extends BrowseFragment {
             List<Article> list = new ArrayList<>();
 
             try {
-                deliveryService = Injection.provideDeliveryService();
                 MultipleItemQuery<Article> articlesQuery = deliveryService.<Article>items().type(Article.TYPE);
-
                 list = articlesQuery.get().getItems();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -240,5 +258,26 @@ public class MainFragment extends BrowseFragment {
             loadArticlesRow(list);
         }
 
+    }
+
+    private class CafesConnection extends AsyncTask<Object, Object, List<Cafe>> {
+
+        @Override
+        protected List<Cafe> doInBackground(Object... arg0) {
+            List<Cafe> list = new ArrayList<>();
+
+            try {
+                MultipleItemQuery<Cafe> cafesQuery = deliveryService.<Cafe>items().type(Cafe.TYPE);
+                list = cafesQuery.get().getItems();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(List<Cafe> list) {
+            loadCafesRow(list);
+        }
     }
 }

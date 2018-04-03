@@ -19,6 +19,7 @@ import java.util.List;
 
 import io.reactivex.functions.Function;
 import kentico.kentico_android_tv_app.data.models.Article;
+import kentico.kentico_android_tv_app.data.models.Cafe;
 
 public class AppConfig {
     public final static String KENTICO_CLOUD_PROJECT_ID = "64814f50-a12e-4431-b491-2d24613693ab";
@@ -29,13 +30,13 @@ public class AppConfig {
         List<TypeResolver<?>> typeResolvers = new ArrayList<>();
 
         // Cafe resolvers
-//        typeResolvers.add(new TypeResolver<>(Cafe.TYPE, new Function<Void, Cafe>() {
-//            @Nullable
-//            @Override
-//            public Cafe apply(@Nullable Void input) {
-//                return new Cafe();
-//            }
-//        }));
+        typeResolvers.add(new TypeResolver<>(Cafe.TYPE, new Function<Void, Cafe>() {
+            @Nullable
+            @Override
+            public Cafe apply(@Nullable Void input) {
+                return new Cafe();
+            }
+        }));
 
         /// Article resolver
         typeResolvers.add(new TypeResolver<>(Article.TYPE, new Function<Void, Article>() {
