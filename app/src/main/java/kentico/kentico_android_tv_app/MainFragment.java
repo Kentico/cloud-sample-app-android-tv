@@ -92,11 +92,11 @@ public class MainFragment extends BrowseFragment {
     }
 
     private void setupUIElements() {
-        setTitle(getString(R.string.browse_title));
+        setBadgeDrawable(getActivity().getResources().getDrawable(
+         R.drawable.main_logo_border));
 
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
-
 
         setBrandColor(getResources().getColor(R.color.fastlane_background));
         setSearchAffordanceColor(getResources().getColor(R.color.search_opaque));
