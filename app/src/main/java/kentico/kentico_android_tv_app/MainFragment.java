@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.kenticocloud.delivery_core.models.item.ContentItem;
 import com.kenticocloud.delivery_core.query.item.MultipleItemQuery;
 import com.kenticocloud.delivery_core.services.IDeliveryService;
 
@@ -63,6 +64,9 @@ public class MainFragment extends BrowseFragment {
 
     private IDeliveryService deliveryService = Injection.provideDeliveryService();
 
+    private List<Cafe> cafesList;
+    private List<Article> articlesList;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -71,8 +75,15 @@ public class MainFragment extends BrowseFragment {
 
         setupUIElements();
 
-        new ArticlesConnection().execute();
-        new CafesConnection().execute();
+        try {
+            cafesList = copyList(new DefaultConnection<Cafe>().execute(Cafe.TYPE).get());
+            articlesList = copyList(new DefaultConnection<Article>().execute(Article.TYPE).get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        loadArticlesRow(articlesList);
+        loadCafesRow(cafesList);
 
         setupEventListeners();
     }
@@ -237,36 +248,14 @@ public class MainFragment extends BrowseFragment {
         mBackgroundTimer.cancel();
     }
 
-    private class ArticlesConnection extends AsyncTask<Object, Object, List<Article>> {
+    private class DefaultConnection<T extends ContentItem> extends AsyncTask<String, Object, List<T>> {
 
         @Override
-        protected List<Article> doInBackground(Object... arg0) {
-            List<Article> list = new ArrayList<>();
+        protected List<T> doInBackground(String... arg0) {
+            List<T> list = new ArrayList<>();
 
             try {
-                MultipleItemQuery<Article> articlesQuery = deliveryService.<Article>items().type(Article.TYPE);
-                list = articlesQuery.get().getItems();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return list;
-        }
-
-        @Override
-        protected void onPostExecute(List<Article> list) {
-            loadArticlesRow(list);
-        }
-
-    }
-
-    private class CafesConnection extends AsyncTask<Object, Object, List<Cafe>> {
-
-        @Override
-        protected List<Cafe> doInBackground(Object... arg0) {
-            List<Cafe> list = new ArrayList<>();
-
-            try {
-                MultipleItemQuery<Cafe> cafesQuery = deliveryService.<Cafe>items().type(Cafe.TYPE);
+                MultipleItemQuery<T> cafesQuery = deliveryService.<T>items().type(arg0[0]);
                 list = cafesQuery.get().getItems();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -275,8 +264,14 @@ public class MainFragment extends BrowseFragment {
         }
 
         @Override
-        protected void onPostExecute(List<Cafe> list) {
-            loadCafesRow(list);
+        protected void onPostExecute(List<T> list) {
+
         }
+    }
+
+    private static <T> List<T> copyList(List<T> source) {
+        List<T> dest = new ArrayList<>();
+        dest.addAll(source);
+        return dest;
     }
 }
