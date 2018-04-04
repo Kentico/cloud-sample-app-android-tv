@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 
@@ -88,6 +89,22 @@ public class CardPresenter extends Presenter {
                 cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
                 Glide.with(viewHolder.view.getContext())
                         .load(cafe.getPhotoUrl())
+                        .centerCrop()
+                        .into(cardView.getMainImageView());
+            }
+        }
+
+        if (item.getClass() == About.class) {
+            About about = (About) item;
+            ImageCardView cardView = (ImageCardView) viewHolder.view;
+
+            Log.d(TAG, "onBindViewHolder");
+            if (about.image != null) {
+                cardView.setTitleText(about.getTitle());
+                cardView.setContentText(about.getDescription());
+                cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+                Glide.with(viewHolder.view.getContext())
+                        .load(about.getImageUrl())
                         .centerCrop()
                         .into(cardView.getMainImageView());
             }

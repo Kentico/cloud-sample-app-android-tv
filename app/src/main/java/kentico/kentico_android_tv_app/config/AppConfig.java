@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.functions.Function;
+import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 
@@ -44,6 +45,15 @@ public class AppConfig {
             @Override
             public Article apply(@Nullable Void input) {
                 return new Article();
+            }
+        }));
+
+        /// About resolver
+        typeResolvers.add(new TypeResolver<>(About.TYPE, new Function<Void, About>() {
+            @Nullable
+            @Override
+            public About apply(@Nullable Void input) {
+                return new About();
             }
         }));
 

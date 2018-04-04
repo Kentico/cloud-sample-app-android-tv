@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.SerializedArticle;
@@ -66,6 +67,7 @@ public class MainFragment extends BrowseFragment {
 
     private List<Cafe> cafesList;
     private List<Article> articlesList;
+    private List<About> aboutList;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -78,12 +80,14 @@ public class MainFragment extends BrowseFragment {
         try {
             cafesList = copyList(new DefaultConnection<Cafe>().execute(Cafe.TYPE).get());
             articlesList = copyList(new DefaultConnection<Article>().execute(Article.TYPE).get());
+            aboutList = copyList(new DefaultConnection<About>().execute(About.TYPE).get());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         loadArticlesRow(articlesList);
         loadCafesRow(cafesList);
+        loadAboutRow(aboutList);
 
         setupEventListeners();
     }
@@ -145,6 +149,19 @@ public class MainFragment extends BrowseFragment {
         }
         HeaderItem header = new HeaderItem(0, getResources().getString(R.string.cafes));
         mRowsAdapter.add(new ListRow(header, cafesRowAdapter));
+
+        setAdapter(mRowsAdapter);
+    }
+
+    private void loadAboutRow(List<About> abouts) {
+        CardPresenter cardPresenter = new CardPresenter();
+
+        ArrayObjectAdapter aboutsRowAdapter = new ArrayObjectAdapter(cardPresenter);
+        for (int j = 0; j < abouts.size(); j++) {
+            aboutsRowAdapter.add(abouts.get(j));
+        }
+        HeaderItem header = new HeaderItem(0, getResources().getString(R.string.abouts));
+        mRowsAdapter.add(new ListRow(header, aboutsRowAdapter));
 
         setAdapter(mRowsAdapter);
     }
@@ -255,8 +272,8 @@ public class MainFragment extends BrowseFragment {
             List<T> list = new ArrayList<>();
 
             try {
-                MultipleItemQuery<T> cafesQuery = deliveryService.<T>items().type(arg0[0]);
-                list = cafesQuery.get().getItems();
+                MultipleItemQuery<T> query = deliveryService.<T>items().type(arg0[0]);
+                list = query.get().getItems();
             } catch (Exception e) {
                 e.printStackTrace();
             }
