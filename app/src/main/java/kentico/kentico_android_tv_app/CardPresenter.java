@@ -7,6 +7,7 @@ package kentico.kentico_android_tv_app;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ import kentico.kentico_android_tv_app.data.models.Cafe;
 public class CardPresenter extends Presenter {
     private static final String TAG = "CardPresenter";
 
-    private static final int CARD_WIDTH = 313;
+    private static final int CARD_WIDTH = 400;
     private static final int CARD_HEIGHT = 176;
     private static int sSelectedBackgroundColor;
     private static int sDefaultBackgroundColor;
@@ -41,6 +42,8 @@ public class CardPresenter extends Presenter {
 
         sDefaultBackgroundColor = parent.getResources().getColor(R.color.default_background);
         sSelectedBackgroundColor = parent.getResources().getColor(R.color.selected_background);
+
+//        ContextThemeWrapper wrapper = new ContextThemeWrapper(parent.getContext(), R.style.CustomImageCardViewStyle);
 
         ImageCardView cardView = new ImageCardView(parent.getContext()) {
             @Override
@@ -81,12 +84,13 @@ public class CardPresenter extends Presenter {
         if (item.getClass() == Cafe.class) {
             Cafe cafe = (Cafe) item;
             ImageCardView cardView = (ImageCardView) viewHolder.view;
+            int cafeCardWidth = 313;
 
             Log.d(TAG, "onBindViewHolder");
             if (cafe.photo != null) {
                 cardView.setTitleText(cafe.getCountry());
                 cardView.setContentText(cafe.getAddress());
-                cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+                cardView.setMainImageDimensions(cafeCardWidth, CARD_HEIGHT);
                 Glide.with(viewHolder.view.getContext())
                         .load(cafe.getPhotoUrl())
                         .centerCrop()
@@ -97,12 +101,12 @@ public class CardPresenter extends Presenter {
         if (item.getClass() == About.class) {
             About about = (About) item;
             ImageCardView cardView = (ImageCardView) viewHolder.view;
+            int aboutCardWidth = 350;
 
             Log.d(TAG, "onBindViewHolder");
             if (about.image != null) {
                 cardView.setTitleText(about.getTitle());
-                cardView.setContentText(about.getDescription());
-                cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+                cardView.setMainImageDimensions(aboutCardWidth, CARD_HEIGHT);
                 Glide.with(viewHolder.view.getContext())
                         .load(about.getImageUrl())
                         .centerCrop()

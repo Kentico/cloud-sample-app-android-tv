@@ -72,7 +72,7 @@ public final class Cafe extends ContentItem {
         return email.getValue();
     }
 
-    public String getAddress() { return city.getValue() + ", " + street.getValue() + ", " + zipCode.getValue(); }
+    public String getAddress() { return city.getValue() + ", " + street.getValue(); }
 
     public String getPhotoUrl() {
 

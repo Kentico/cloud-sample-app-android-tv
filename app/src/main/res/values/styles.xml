@@ -2,4 +2,8 @@
 <resources>
 
     <style name="AppTheme" parent="@style/Theme.Leanback"></style>
+
+    <style name="CustomImageCardViewStyle" parent="Widget.Leanback.ImageCardViewStyle">
+        <item name="lbImageCardViewType">Title|Content</item>
+    </style>
 </resources>
