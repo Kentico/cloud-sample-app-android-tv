@@ -7,7 +7,6 @@ package kentico.kentico_android_tv_app;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -16,6 +15,7 @@ import com.bumptech.glide.Glide;
 import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
+import kentico.kentico_android_tv_app.data.models.ShopItem;
 
 /*
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
@@ -76,6 +76,23 @@ public class CardPresenter extends Presenter {
                 cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
                 Glide.with(viewHolder.view.getContext())
                         .load(article.getTeaserImageUrl())
+                        .centerCrop()
+                        .into(cardView.getMainImageView());
+            }
+        }
+
+        if (item.getClass() == ShopItem.class) {
+            ShopItem shopItem = (ShopItem) item;
+            ImageCardView cardView = (ImageCardView) viewHolder.view;
+            int shopItemCardWidth = 313;
+
+            Log.d(TAG, "onBindViewHolder");
+            if (shopItem.image != null) {
+                cardView.setTitleText(shopItem.getProductName());
+                cardView.setContentText(String.valueOf(shopItem.getPrice()));
+                cardView.setMainImageDimensions(shopItemCardWidth, CARD_HEIGHT);
+                Glide.with(viewHolder.view.getContext())
+                        .load(shopItem.getImageUrl())
                         .centerCrop()
                         .into(cardView.getMainImageView());
             }

@@ -40,6 +40,7 @@ import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.SerializedArticle;
+import kentico.kentico_android_tv_app.data.models.ShopItem;
 import kentico.kentico_android_tv_app.injection.Injection;
 
 /**
@@ -68,6 +69,7 @@ public class MainFragment extends BrowseFragment {
     private List<Cafe> cafesList;
     private List<Article> articlesList;
     private List<About> aboutList;
+    private List<ShopItem> shopList;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -78,14 +80,19 @@ public class MainFragment extends BrowseFragment {
         setupUIElements();
 
         try {
-            cafesList = copyList(new DefaultConnection<Cafe>().execute(Cafe.TYPE).get());
             articlesList = copyList(new DefaultConnection<Article>().execute(Article.TYPE).get());
+            shopList = copyList(new DefaultConnection<ShopItem>().execute(ShopItem.COFFEE_TYPE).get());
+            shopList.addAll(new DefaultConnection<ShopItem>().execute(ShopItem.BREWER_TYPE).get());
+            shopList.addAll(new DefaultConnection<ShopItem>().execute(ShopItem.GRINDER_TYPE).get());
+            shopList.addAll(new DefaultConnection<ShopItem>().execute(ShopItem.ACCESSORY_TYPE).get());
+            cafesList = copyList(new DefaultConnection<Cafe>().execute(Cafe.TYPE).get());
             aboutList = copyList(new DefaultConnection<About>().execute(About.TYPE).get());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         loadArticlesRow(articlesList);
+        loadShopRow(shopList);
         loadCafesRow(cafesList);
         loadAboutRow(aboutList);
 
@@ -138,6 +145,19 @@ public class MainFragment extends BrowseFragment {
 //        mRowsAdapter.add(new ListRow(gridHeader, gridRowAdapter));
 
 //        setAdapter(mRowsAdapter);
+    }
+
+    private void loadShopRow(List<ShopItem> items) {
+        CardPresenter cardPresenter = new CardPresenter();
+
+        ArrayObjectAdapter itemsRowAdapter = new ArrayObjectAdapter(cardPresenter);
+        for (int j = 0; j < items.size(); j++) {
+            itemsRowAdapter.add(items.get(j));
+        }
+        HeaderItem header = new HeaderItem(0, getResources().getString(R.string.shop));
+        mRowsAdapter.add(new ListRow(header, itemsRowAdapter));
+
+        setAdapter(mRowsAdapter);
     }
 
     private void loadCafesRow(List<Cafe> cafes) {

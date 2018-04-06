@@ -21,6 +21,7 @@ import io.reactivex.functions.Function;
 import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
+import kentico.kentico_android_tv_app.data.models.ShopItem;
 
 public class AppConfig {
     public final static String KENTICO_CLOUD_PROJECT_ID = "64814f50-a12e-4431-b491-2d24613693ab";
@@ -57,14 +58,41 @@ public class AppConfig {
             }
         }));
 
-        /// Coffee resolver
-//        typeResolvers.add(new TypeResolver<>(Coffee.TYPE, new Function<Void, Coffee>() {
-//            @Nullable
-//            @Override
-//            public Coffee apply(@Nullable Void input) {
-//                return new Coffee();
-//            }
-//        }));
+        // Coffee resolver
+        typeResolvers.add(new TypeResolver<>(ShopItem.COFFEE_TYPE, new Function<Void, ShopItem>() {
+            @Nullable
+            @Override
+            public ShopItem apply(@Nullable Void input) {
+                return new ShopItem();
+            }
+        }));
+
+        // Brewer resolver
+        typeResolvers.add(new TypeResolver<>(ShopItem.BREWER_TYPE, new Function<Void, ShopItem>() {
+            @Nullable
+            @Override
+            public ShopItem apply(@Nullable Void input) {
+                return new ShopItem();
+            }
+        }));
+
+        // Grinder resolver
+        typeResolvers.add(new TypeResolver<>(ShopItem.GRINDER_TYPE, new Function<Void, ShopItem>() {
+            @Nullable
+            @Override
+            public ShopItem apply(@Nullable Void input) {
+                return new ShopItem();
+            }
+        }));
+
+        // Accessory resolver
+        typeResolvers.add(new TypeResolver<>(ShopItem.ACCESSORY_TYPE, new Function<Void, ShopItem>() {
+            @Nullable
+            @Override
+            public ShopItem apply(@Nullable Void input) {
+                return new ShopItem();
+            }
+        }));
 
         return typeResolvers;
     }
