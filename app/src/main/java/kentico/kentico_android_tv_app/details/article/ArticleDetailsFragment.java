@@ -28,9 +28,9 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 import kentico.kentico_android_tv_app.MainActivity;
+import kentico.kentico_android_tv_app.MainApplication;
 import kentico.kentico_android_tv_app.R;
 import kentico.kentico_android_tv_app.data.models.Article;
-import kentico.kentico_android_tv_app.data.models.SerializedArticle;
 
 /**
  * Created by Juraj on 02.04.2018.
@@ -48,7 +48,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
 
     private static final int NUM_COLS = 10;
 
-    private SerializedArticle mSelectedArticle;
+    private Article mSelectedArticle;
 
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
@@ -64,7 +64,8 @@ public class ArticleDetailsFragment extends DetailsFragment {
 
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
-            mSelectedArticle = (SerializedArticle) bundle.getSerializable(ArticleDetailsActivity.ARTICLE);
+            int articleIndex = bundle.getInt(ArticleDetailsActivity.ARTICLE);
+            mSelectedArticle = MainApplication.getArticlesList().get(articleIndex);
         }
 
         if (mSelectedArticle != null) {
@@ -82,7 +83,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
         }
     }
 
-    private void initializeBackground(SerializedArticle data) {
+    private void initializeBackground(Article data) {
         mDetailsBackground.enableParallax();
         Glide.with(getActivity())
                 .load(data.getTeaserImageUrl())
@@ -196,8 +197,8 @@ public class ArticleDetailsFragment extends DetailsFragment {
                 Log.d(TAG, "Item: " + item.toString());
                 Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
                 try {
-                    SerializedArticle article = new SerializedArticle((Article) item);
-                    intent.putExtra(ArticleDetailsActivity.ARTICLE, article);
+                    int itemIndex = MainApplication.getArticlesList().indexOf(item);
+                    intent.putExtra(ArticleDetailsActivity.ARTICLE, itemIndex);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -34,7 +34,6 @@ import java.util.TimerTask;
 import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
-import kentico.kentico_android_tv_app.data.models.SerializedArticle;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
 import kentico.kentico_android_tv_app.details.article.ArticleDetailsActivity;
 
@@ -187,8 +186,8 @@ public class MainFragment extends BrowseFragment {
                 Log.d(TAG, "Item: " + item.toString());
                 Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
 
-                SerializedArticle serializedArticle = new SerializedArticle(article);
-                intent.putExtra(ArticleDetailsActivity.ARTICLE, serializedArticle);
+                int itemIndex = MainApplication.getArticlesList().indexOf(item);
+                intent.putExtra(ArticleDetailsActivity.ARTICLE, itemIndex);
 
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
