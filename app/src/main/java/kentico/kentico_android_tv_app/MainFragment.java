@@ -2,7 +2,6 @@ package kentico.kentico_android_tv_app;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v17.leanback.app.BackgroundManager;
@@ -27,11 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.kenticocloud.delivery_core.models.item.ContentItem;
-import com.kenticocloud.delivery_core.query.item.MultipleItemQuery;
-import com.kenticocloud.delivery_core.services.IDeliveryService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,7 +36,6 @@ import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.SerializedArticle;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
-import kentico.kentico_android_tv_app.injection.Injection;
 
 /**
  * Created by Juraj on 25.03.2018.
@@ -64,13 +58,6 @@ public class MainFragment extends BrowseFragment {
     private String mBackgroundUri;
     private BackgroundManager mBackgroundManager;
 
-    private IDeliveryService deliveryService = Injection.provideDeliveryService();
-
-    private List<Cafe> cafesList;
-    private List<Article> articlesList;
-    private List<About> aboutList;
-    private List<ShopItem> shopList;
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -79,22 +66,10 @@ public class MainFragment extends BrowseFragment {
 
         setupUIElements();
 
-        try {
-            articlesList = copyList(new DefaultConnection<Article>().execute(Article.TYPE).get());
-            shopList = copyList(new DefaultConnection<ShopItem>().execute(ShopItem.COFFEE_TYPE).get());
-            shopList.addAll(new DefaultConnection<ShopItem>().execute(ShopItem.BREWER_TYPE).get());
-            shopList.addAll(new DefaultConnection<ShopItem>().execute(ShopItem.GRINDER_TYPE).get());
-            shopList.addAll(new DefaultConnection<ShopItem>().execute(ShopItem.ACCESSORY_TYPE).get());
-            cafesList = copyList(new DefaultConnection<Cafe>().execute(Cafe.TYPE).get());
-            aboutList = copyList(new DefaultConnection<About>().execute(About.TYPE).get());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        loadArticlesRow(articlesList);
-        loadShopRow(shopList);
-        loadCafesRow(cafesList);
-        loadAboutRow(aboutList);
+        loadArticlesRow(MainApplication.getArticlesList());
+        loadShopRow(MainApplication.getShopList());
+        loadCafesRow(MainApplication.getCafesList());
+        loadAboutRow(MainApplication.getAboutList());
 
         setupEventListeners();
     }
@@ -283,32 +258,5 @@ public class MainFragment extends BrowseFragment {
                     }
                 });
         mBackgroundTimer.cancel();
-    }
-
-    private class DefaultConnection<T extends ContentItem> extends AsyncTask<String, Object, List<T>> {
-
-        @Override
-        protected List<T> doInBackground(String... arg0) {
-            List<T> list = new ArrayList<>();
-
-            try {
-                MultipleItemQuery<T> query = deliveryService.<T>items().type(arg0[0]);
-                list = query.get().getItems();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return list;
-        }
-
-        @Override
-        protected void onPostExecute(List<T> list) {
-
-        }
-    }
-
-    private static <T> List<T> copyList(List<T> source) {
-        List<T> dest = new ArrayList<>();
-        dest.addAll(source);
-        return dest;
     }
 }
