@@ -18,7 +18,6 @@ import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -36,14 +35,13 @@ import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
 import kentico.kentico_android_tv_app.details.article.ArticleDetailsActivity;
+import kentico.kentico_android_tv_app.details.cafe.CafeDetailsActivity;
 
 /**
  * Created by Juraj on 25.03.2018.
  */
 
 public class MainFragment extends BrowseFragment {
-    private static final String TAG = "MainFragment";
-
     private static final int BACKGROUND_UPDATE_DELAY = 300;
     private static final int GRID_ITEM_WIDTH = 200;
     private static final int GRID_ITEM_HEIGHT = 200;
@@ -182,8 +180,6 @@ public class MainFragment extends BrowseFragment {
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
             if (item instanceof Article) {
-                Article article = (Article) item;
-                Log.d(TAG, "Item: " + item.toString());
                 Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
 
                 int itemIndex = MainApplication.getArticlesList().indexOf(item);
@@ -193,6 +189,19 @@ public class MainFragment extends BrowseFragment {
                         getActivity(),
                         ((ImageCardView) itemViewHolder.view).getMainImageView(),
                         ArticleDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+                getActivity().startActivity(intent, bundle);
+            }
+
+            if (item instanceof Cafe) {
+                Intent intent = new Intent(getActivity(), CafeDetailsActivity.class);
+
+                int itemIndex = MainApplication.getCafesList().indexOf(item);
+                intent.putExtra(CafeDetailsActivity.CAFE, itemIndex);
+
+                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(),
+                        ((ImageCardView) itemViewHolder.view).getMainImageView(),
+                        CafeDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
                 getActivity().startActivity(intent, bundle);
             } else if (item instanceof String) {
                 if (((String) item).contains(getString(R.string.error_fragment))) {

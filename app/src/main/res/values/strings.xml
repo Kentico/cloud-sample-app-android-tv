@@ -8,6 +8,8 @@
     <string name="article_read_more">Read More</string>
     <string name="article_about_us">About Us</string>
     <string name="action_return_back">Return Back</string>
+    <string name="action_cafe_show">Show On Map</string>
+    <string name="action_cafe_contact">Contact Us</string>
     <string name="cafe">Cafe</string>
     <string name="cafes">Cafes</string>
     <string name="shop">Product Catalog</string>

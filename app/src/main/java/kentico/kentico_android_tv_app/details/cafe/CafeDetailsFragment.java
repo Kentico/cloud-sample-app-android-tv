@@ -1,4 +1,4 @@
-package kentico.kentico_android_tv_app.details.article;
+package kentico.kentico_android_tv_app.details.cafe;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,21 +29,21 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import kentico.kentico_android_tv_app.MainActivity;
 import kentico.kentico_android_tv_app.MainApplication;
 import kentico.kentico_android_tv_app.R;
-import kentico.kentico_android_tv_app.data.models.Article;
+import kentico.kentico_android_tv_app.data.models.Cafe;
 
 /**
- * Created by Juraj on 02.04.2018.
+ * Created by Juraj on 07.04.2018.
  */
 
-public class ArticleDetailsFragment extends DetailsFragment {
-    private static final int ACTION_READ_MORE = 1;
-    private static final int ACTION_ABOUT_US = 2;
+public class CafeDetailsFragment extends DetailsFragment {
+    private static final int ACTION_SHOW = 1;
+    private static final int ACTION_CONTACT = 2;
     private static final int ACTION_RETURN_BACK = 3;
 
     private static final int DETAIL_THUMB_WIDTH = 480;
     private static final int DETAIL_THUMB_HEIGHT = 274;
 
-    private Article mSelectedArticle;
+    private Cafe mSelectedCafe;
 
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
@@ -58,29 +58,29 @@ public class ArticleDetailsFragment extends DetailsFragment {
 
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
-            int articleIndex = bundle.getInt(ArticleDetailsActivity.ARTICLE);
-            mSelectedArticle = MainApplication.getArticlesList().get(articleIndex);
+            int cafeIndex = bundle.getInt(CafeDetailsActivity.CAFE);
+            mSelectedCafe = MainApplication.getCafesList().get(cafeIndex);
         }
 
-        if (mSelectedArticle != null) {
+        if (mSelectedCafe != null) {
             mPresenterSelector = new ClassPresenterSelector();
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
             setupDetailsOverviewRow();
             setupDetailsOverviewRowPresenter();
-//            setupRelatedArticleListRow();
+//            setupRelatedCafeListRow();
             setAdapter(mAdapter);
-            initializeBackground(mSelectedArticle);
-            setOnItemViewClickedListener(new ItemViewClickedListener());
+            initializeBackground(mSelectedCafe);
+            setOnItemViewClickedListener(new CafeDetailsFragment.ItemViewClickedListener());
         } else {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
         }
     }
 
-    private void initializeBackground(Article data) {
+    private void initializeBackground(Cafe data) {
         mDetailsBackground.enableParallax();
         Glide.with(getActivity())
-                .load(data.getTeaserImageUrl())
+                .load(data.getPhotoUrl())
                 .asBitmap()
                 .centerCrop()
                 .error(R.drawable.default_background)
@@ -95,13 +95,13 @@ public class ArticleDetailsFragment extends DetailsFragment {
     }
 
     private void setupDetailsOverviewRow() {
-        final DetailsOverviewRow row = new DetailsOverviewRow(mSelectedArticle);
+        final DetailsOverviewRow row = new DetailsOverviewRow(mSelectedCafe);
         row.setImageDrawable(
                 ContextCompat.getDrawable(getActivity(), R.drawable.default_background));
         int width = convertDpToPixel(getActivity().getApplicationContext(), DETAIL_THUMB_WIDTH);
         int height = convertDpToPixel(getActivity().getApplicationContext(), DETAIL_THUMB_HEIGHT);
         Glide.with(getActivity())
-                .load(mSelectedArticle.getTeaserImageUrl())
+                .load(mSelectedCafe.getPhotoUrl())
                 .centerCrop()
                 .error(R.drawable.default_background)
                 .into(new SimpleTarget<GlideDrawable>(width, height) {
@@ -118,12 +118,12 @@ public class ArticleDetailsFragment extends DetailsFragment {
 
         actionAdapter.add(
                 new Action(
-                        ACTION_READ_MORE,
-                        getResources().getString(R.string.article_read_more)));
+                        ACTION_SHOW,
+                        getResources().getString(R.string.action_cafe_show)));
         actionAdapter.add(
                 new Action(
-                        ACTION_ABOUT_US,
-                        getResources().getString(R.string.article_about_us)));
+                        ACTION_CONTACT,
+                        getResources().getString(R.string.action_cafe_contact)));
         actionAdapter.add(
                 new Action(
                         ACTION_RETURN_BACK,
@@ -136,7 +136,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
     private void setupDetailsOverviewRowPresenter() {
         // Set detail background.
         FullWidthDetailsOverviewRowPresenter detailsPresenter =
-                new FullWidthDetailsOverviewRowPresenter(new ArticleDetailsDescription());
+                new FullWidthDetailsOverviewRowPresenter(new CafeDetailsDescription());
         detailsPresenter.setBackgroundColor(
                 ContextCompat.getColor(getActivity(), R.color.selected_background));
 
@@ -144,7 +144,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
         FullWidthDetailsOverviewSharedElementHelper sharedElementHelper =
                 new FullWidthDetailsOverviewSharedElementHelper();
         sharedElementHelper.setSharedElementEnterTransition(
-                getActivity(), ArticleDetailsActivity.SHARED_ELEMENT_NAME);
+                getActivity(), CafeDetailsActivity.SHARED_ELEMENT_NAME);
         detailsPresenter.setListener(sharedElementHelper);
         detailsPresenter.setParticipatingEntranceTransition(true);
 
@@ -152,28 +152,13 @@ public class ArticleDetailsFragment extends DetailsFragment {
             @Override
             public void onActionClicked(Action action) {
                 if (action.getId() == ACTION_RETURN_BACK) {
-                    ArticleDetailsFragment.super.getActivity().onBackPressed();
+                    CafeDetailsFragment.super.getActivity().onBackPressed();
                 }
             }
         });
 
         mPresenterSelector.addClassPresenter(DetailsOverviewRow.class, detailsPresenter);
     }
-
-//    private void setupRelatedArticleListRow() {
-//        String subcategories[] = {getString(R.string.related_movies)};
-//        List<Article> list = List.getList();
-//
-//        Collections.shuffle(list);
-//        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
-//        for (int j = 0; j < NUM_COLS; j++) {
-//            listRowAdapter.add(list.get(j % 5));
-//        }
-//
-//        HeaderItem header = new HeaderItem(0, subcategories[0]);
-//        mAdapter.add(new ListRow(header, listRowAdapter));
-//        mPresenterSelector.addClassPresenter(ListRow.class, new ListRowPresenter());
-//    }
 
     public int convertDpToPixel(Context context, int dp) {
         float density = context.getResources().getDisplayMetrics().density;
@@ -185,11 +170,11 @@ public class ArticleDetailsFragment extends DetailsFragment {
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
-            if (item instanceof Article) {
-                Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
+            if (item instanceof Cafe) {
+                Intent intent = new Intent(getActivity(), CafeDetailsActivity.class);
                 try {
-                    int itemIndex = MainApplication.getArticlesList().indexOf(item);
-                    intent.putExtra(ArticleDetailsActivity.ARTICLE, itemIndex);
+                    int itemIndex = MainApplication.getCafesList().indexOf(item);
+                    intent.putExtra(CafeDetailsActivity.CAFE, itemIndex);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -197,7 +182,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                 ArticleDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+                        CafeDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
                 getActivity().startActivity(intent, bundle);
             }
         }

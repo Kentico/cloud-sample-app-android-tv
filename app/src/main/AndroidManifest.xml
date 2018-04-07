@@ -31,6 +31,7 @@
         </activity>
 
         <activity android:name=".details.article.ArticleDetailsActivity" />
+        <activity android:name=".details.cafe.CafeDetailsActivity" />
 
     </application>
 

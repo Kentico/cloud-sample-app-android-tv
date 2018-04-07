@@ -6,7 +6,6 @@ package kentico.kentico_android_tv_app;
 
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -22,8 +21,6 @@ import kentico.kentico_android_tv_app.data.models.ShopItem;
  * It contains an Image CardView
  */
 public class CardPresenter extends Presenter {
-    private static final String TAG = "CardPresenter";
-
     private static final int CARD_WIDTH = 400;
     private static final int CARD_HEIGHT = 176;
     private static int sSelectedBackgroundColor;
@@ -38,8 +35,6 @@ public class CardPresenter extends Presenter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        Log.d(TAG, "onCreateViewHolder");
-
         sDefaultBackgroundColor = parent.getResources().getColor(R.color.default_background);
         sSelectedBackgroundColor = parent.getResources().getColor(R.color.selected_background);
 
@@ -69,7 +64,6 @@ public class CardPresenter extends Presenter {
             Article article = (Article) item;
             ImageCardView cardView = (ImageCardView) viewHolder.view;
 
-            Log.d(TAG, "onBindViewHolder");
             if (article.teaserImage != null) {
                 cardView.setTitleText(article.getTitle());
                 cardView.setContentText(article.getSummary());
@@ -86,7 +80,6 @@ public class CardPresenter extends Presenter {
             ImageCardView cardView = (ImageCardView) viewHolder.view;
             int shopItemCardWidth = 313;
 
-            Log.d(TAG, "onBindViewHolder");
             if (shopItem.image != null) {
                 cardView.setTitleText(shopItem.getProductName());
                 cardView.setContentText(String.valueOf(shopItem.getPrice()));
@@ -103,7 +96,6 @@ public class CardPresenter extends Presenter {
             ImageCardView cardView = (ImageCardView) viewHolder.view;
             int cafeCardWidth = 313;
 
-            Log.d(TAG, "onBindViewHolder");
             if (cafe.photo != null) {
                 cardView.setTitleText(cafe.getCountry());
                 cardView.setContentText(cafe.getAddress());
@@ -120,7 +112,6 @@ public class CardPresenter extends Presenter {
             ImageCardView cardView = (ImageCardView) viewHolder.view;
             int aboutCardWidth = 350;
 
-            Log.d(TAG, "onBindViewHolder");
             if (about.image != null) {
                 cardView.setTitleText(about.getTitle());
                 cardView.setMainImageDimensions(aboutCardWidth, CARD_HEIGHT);
@@ -134,7 +125,6 @@ public class CardPresenter extends Presenter {
 
     @Override
     public void onUnbindViewHolder(Presenter.ViewHolder viewHolder) {
-        Log.d(TAG, "onUnbindViewHolder");
         ImageCardView cardView = (ImageCardView) viewHolder.view;
         cardView.setBadgeImage(null);
         cardView.setMainImage(null);
