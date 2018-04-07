@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ArticleDetailsActivity" />
+        <activity android:name=".details.article.ArticleDetailsActivity" />
 
     </application>
 

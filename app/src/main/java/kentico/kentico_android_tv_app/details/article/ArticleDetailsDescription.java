@@ -1,4 +1,4 @@
-package kentico.kentico_android_tv_app;
+package kentico.kentico_android_tv_app.details.article;
 
 import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
 import android.text.Html;

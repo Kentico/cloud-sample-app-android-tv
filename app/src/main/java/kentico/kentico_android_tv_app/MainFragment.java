@@ -36,6 +36,7 @@ import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.SerializedArticle;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
+import kentico.kentico_android_tv_app.details.article.ArticleDetailsActivity;
 
 /**
  * Created by Juraj on 25.03.2018.

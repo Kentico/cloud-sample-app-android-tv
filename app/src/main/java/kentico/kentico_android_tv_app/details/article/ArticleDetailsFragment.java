@@ -1,4 +1,4 @@
-package kentico.kentico_android_tv_app;
+package kentico.kentico_android_tv_app.details.article;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +27,8 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import kentico.kentico_android_tv_app.MainActivity;
+import kentico.kentico_android_tv_app.R;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.SerializedArticle;
 

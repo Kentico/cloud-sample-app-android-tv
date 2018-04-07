@@ -1,7 +1,9 @@
-package kentico.kentico_android_tv_app;
+package kentico.kentico_android_tv_app.details.article;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import kentico.kentico_android_tv_app.R;
 
 /**
  * Created by Juraj on 02.04.2018.
