@@ -11,6 +11,7 @@ import kentico.kentico_android_tv_app.R;
 
 public class ArticleDetailsActivity extends Activity {
     public static final String SHARED_ELEMENT_NAME = "ArticleDetails";
+    public static final String BACKGROUND_IMAGE = "Background";
     public static final String ARTICLE = "Article";
 
     @Override

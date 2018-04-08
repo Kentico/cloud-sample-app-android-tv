@@ -139,6 +139,8 @@ public class CafeDetailsFragment extends DetailsFragment {
                 new FullWidthDetailsOverviewRowPresenter(new CafeDetailsDescription());
         detailsPresenter.setBackgroundColor(
                 ContextCompat.getColor(getActivity(), R.color.selected_background));
+        detailsPresenter.setActionsBackgroundColor(
+                ContextCompat.getColor(getActivity(), R.color.fastlane_background));
 
         // Hook up transition element.
         FullWidthDetailsOverviewSharedElementHelper sharedElementHelper =

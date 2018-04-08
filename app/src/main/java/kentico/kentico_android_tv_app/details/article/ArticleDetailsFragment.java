@@ -43,7 +43,8 @@ public class ArticleDetailsFragment extends DetailsFragment {
     private static final int DETAIL_THUMB_WIDTH = 480;
     private static final int DETAIL_THUMB_HEIGHT = 274;
 
-    private Article mSelectedArticle;
+    private static Article mSelectedArticle;
+    private static String mBackgroundImageUrl;
 
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
@@ -60,6 +61,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
         if (bundle != null) {
             int articleIndex = bundle.getInt(ArticleDetailsActivity.ARTICLE);
             mSelectedArticle = MainApplication.getArticlesList().get(articleIndex);
+            mBackgroundImageUrl = bundle.getString(ArticleDetailsActivity.BACKGROUND_IMAGE);
         }
 
         if (mSelectedArticle != null) {
@@ -69,7 +71,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
             setupDetailsOverviewRowPresenter();
 //            setupRelatedArticleListRow();
             setAdapter(mAdapter);
-            initializeBackground(mSelectedArticle);
+            initializeBackground();
             setOnItemViewClickedListener(new ItemViewClickedListener());
         } else {
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -77,10 +79,10 @@ public class ArticleDetailsFragment extends DetailsFragment {
         }
     }
 
-    private void initializeBackground(Article data) {
+    private void initializeBackground() {
         mDetailsBackground.enableParallax();
         Glide.with(getActivity())
-                .load(data.getTeaserImageUrl())
+                .load(mBackgroundImageUrl)
                 .asBitmap()
                 .centerCrop()
                 .error(R.drawable.default_background)
@@ -139,6 +141,8 @@ public class ArticleDetailsFragment extends DetailsFragment {
                 new FullWidthDetailsOverviewRowPresenter(new ArticleDetailsDescription());
         detailsPresenter.setBackgroundColor(
                 ContextCompat.getColor(getActivity(), R.color.selected_background));
+        detailsPresenter.setActionsBackgroundColor(
+                ContextCompat.getColor(getActivity(), R.color.fastlane_background));
 
         // Hook up transition element.
         FullWidthDetailsOverviewSharedElementHelper sharedElementHelper =
