@@ -22,7 +22,7 @@ import kentico.kentico_android_tv_app.injection.Injection;
 
 public class MainApplication extends Application {
 
-    private IDeliveryService deliveryService = Injection.provideDeliveryService();
+    private static IDeliveryService deliveryService = Injection.provideDeliveryService();
 
     private static List<Article> articlesList;
     private static List<Cafe> cafesList;
@@ -61,7 +61,7 @@ public class MainApplication extends Application {
         return shopList;
     }
 
-    private class DefaultConnection<T extends ContentItem> extends AsyncTask<String, Object, List<T>> {
+    private static class DefaultConnection<T extends ContentItem> extends AsyncTask<String, Object, List<T>> {
 
         @Override
         protected List<T> doInBackground(String... arg0) {
@@ -78,8 +78,6 @@ public class MainApplication extends Application {
     }
 
     private static <T> List<T> copyList(List<T> source) {
-        List<T> dest = new ArrayList<>();
-        dest.addAll(source);
-        return dest;
+        return new ArrayList<>(source);
     }
 }

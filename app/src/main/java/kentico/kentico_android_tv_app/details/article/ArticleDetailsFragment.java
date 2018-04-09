@@ -155,6 +155,11 @@ public class ArticleDetailsFragment extends DetailsFragment {
         detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
             @Override
             public void onActionClicked(Action action) {
+                if (action.getId() == ACTION_READ_MORE) {
+
+                }
+                if (action.getId() == ACTION_ABOUT_US) {
+                }
                 if (action.getId() == ACTION_RETURN_BACK) {
                     ArticleDetailsFragment.super.getActivity().onBackPressed();
                 }
