@@ -19,5 +19,4 @@ public class ArticleDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
     }
-
 }

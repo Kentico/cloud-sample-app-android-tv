@@ -10,6 +10,8 @@
     <string name="action_return_back">Return Back</string>
     <string name="action_cafe_show">Show On Map</string>
     <string name="action_cafe_contact">Contact Us</string>
+    <string name="action_shop_parameters">Parameters</string>
+    <string name="action_shop_cart">Add To Cart</string>
     <string name="cafe">Cafe</string>
     <string name="cafes">Our Cafes</string>
     <string name="shop">Product Catalog</string>

@@ -53,10 +53,7 @@ public class ShopCardPresenter extends Presenter {
             ImageCardView cardView = (ImageCardView) viewHolder.view;
 
             if (shopItem.image != null) {
-                String type = shopItem.getType().substring(0, 1).toUpperCase()
-                        + shopItem.getType().substring(1);
-
-                cardView.setTitleText(type);
+                cardView.setTitleText(shopItem.getType());
                 cardView.setContentText(shopItem.getProductName());
                 cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
                 Glide.with(viewHolder.view.getContext())

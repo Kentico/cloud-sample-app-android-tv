@@ -18,5 +18,4 @@ public class CafeDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cafe_details);
     }
-
 }

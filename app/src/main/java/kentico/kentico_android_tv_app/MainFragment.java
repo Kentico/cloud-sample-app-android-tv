@@ -33,8 +33,10 @@ import java.util.TimerTask;
 
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
+import kentico.kentico_android_tv_app.data.models.ShopItem;
 import kentico.kentico_android_tv_app.details.article.ArticleDetailsActivity;
 import kentico.kentico_android_tv_app.details.cafe.CafeDetailsActivity;
+import kentico.kentico_android_tv_app.details.shopItem.ShopItemDetailsActivity;
 import kentico.kentico_android_tv_app.presenters.AboutCardPresenter;
 import kentico.kentico_android_tv_app.presenters.ArticleCardPresenter;
 import kentico.kentico_android_tv_app.presenters.CafeCardPresenter;
@@ -141,6 +143,20 @@ public class MainFragment extends BrowseFragment {
                 int itemIndex = MainApplication.getArticlesList().indexOf(item);
                 intent.putExtra(ArticleDetailsActivity.ARTICLE, itemIndex);
                 intent.putExtra(ArticleDetailsActivity.BACKGROUND_IMAGE, articleDetailsImageUrl);
+
+                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(),
+                        ((ImageCardView) itemViewHolder.view).getMainImageView(),
+                        ArticleDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+                getActivity().startActivity(intent, bundle);
+            }
+
+            if (item instanceof ShopItem) {
+                Intent intent = new Intent(getActivity(), ShopItemDetailsActivity.class);
+
+                int itemIndex = MainApplication.getShopList().indexOf(item);
+                intent.putExtra(ShopItemDetailsActivity.SHOP_ITEM, itemIndex);
+//                intent.putExtra(ArticleDetailsActivity.BACKGROUND_IMAGE, articleDetailsImageUrl);
 
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
