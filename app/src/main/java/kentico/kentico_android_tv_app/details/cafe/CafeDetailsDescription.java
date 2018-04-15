@@ -15,7 +15,7 @@ public class CafeDetailsDescription extends AbstractDetailsDescriptionPresenter 
         Cafe cafe = (Cafe) item;
 
         if (cafe != null) {
-            viewHolder.getTitle().setText(cafe.getCountry());
+            viewHolder.getTitle().setText(cafe.getState());
             viewHolder.getBody().setText(String.valueOf(cafe.getAddress() + ", " + cafe.getZipCode()));
         }
     }

@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import kentico.kentico_android_tv_app.R;
 import kentico.kentico_android_tv_app.data.models.Article;
 
@@ -19,6 +22,8 @@ public class ArticleCardPresenter extends Presenter {
     private static final int CARD_HEIGHT = 176;
     private static int sSelectedBackgroundColor;
     private static int sDefaultBackgroundColor;
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
     private static void updateCardBackgroundColor(ImageCardView view, boolean selected) {
         int color = selected ? sSelectedBackgroundColor : sDefaultBackgroundColor;
@@ -58,7 +63,7 @@ public class ArticleCardPresenter extends Presenter {
 
             if (article.teaserImage != null) {
                 cardView.setTitleText(article.getTitle());
-                cardView.setContentText(article.getSummary());
+                cardView.setContentText(dateFormat.format(article.getPostDate()));
                 cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
                 Glide.with(viewHolder.view.getContext())
                         .load(article.getTeaserImageUrl())

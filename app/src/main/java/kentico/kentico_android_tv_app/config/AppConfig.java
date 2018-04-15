@@ -63,7 +63,7 @@ public class AppConfig {
             @Nullable
             @Override
             public ShopItem apply(@Nullable Void input) {
-                return new ShopItem();
+                return new ShopItem(ShopItem.COFFEE_TYPE);
             }
         }));
 
@@ -72,7 +72,7 @@ public class AppConfig {
             @Nullable
             @Override
             public ShopItem apply(@Nullable Void input) {
-                return new ShopItem();
+                return new ShopItem(ShopItem.BREWER_TYPE);
             }
         }));
 
@@ -81,7 +81,7 @@ public class AppConfig {
             @Nullable
             @Override
             public ShopItem apply(@Nullable Void input) {
-                return new ShopItem();
+                return new ShopItem(ShopItem.GRINDER_TYPE);
             }
         }));
 
@@ -90,7 +90,7 @@ public class AppConfig {
             @Nullable
             @Override
             public ShopItem apply(@Nullable Void input) {
-                return new ShopItem();
+                return new ShopItem(ShopItem.ACCESSORY_TYPE);
             }
         }));
 

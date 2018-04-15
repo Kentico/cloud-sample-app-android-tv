@@ -19,6 +19,10 @@ public class ShopItem extends ContentItem {
     public static final String GRINDER_TYPE = "grinder";
     public static final String ACCESSORY_TYPE = "accessory";
 
+    public ShopItem(String t) {
+        type = t;
+    }
+
     @ElementMapping("product_name")
     public TextElement productName;
 
@@ -30,6 +34,8 @@ public class ShopItem extends ContentItem {
 
     @ElementMapping("short_description")
     public RichTextElement shortDescription;
+
+    public String type;
 
     public String getProductName() {
         return productName.getValue();
@@ -57,4 +63,7 @@ public class ShopItem extends ContentItem {
         return shortDescription.getValue();
     }
 
+    public String getType() {
+        return type;
+    }
 }

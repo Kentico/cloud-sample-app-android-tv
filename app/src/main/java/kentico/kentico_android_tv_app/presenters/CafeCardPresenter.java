@@ -53,7 +53,7 @@ public class CafeCardPresenter extends Presenter {
             ImageCardView cardView = (ImageCardView) viewHolder.view;
 
             if (cafe.photo != null) {
-                cardView.setTitleText(cafe.getCountry());
+                cardView.setTitleText(cafe.getState());
                 cardView.setContentText(cafe.getAddress());
                 cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
                 Glide.with(viewHolder.view.getContext())

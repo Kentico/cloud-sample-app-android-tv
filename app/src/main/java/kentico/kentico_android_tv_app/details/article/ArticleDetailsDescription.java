@@ -1,7 +1,6 @@
 package kentico.kentico_android_tv_app.details.article;
 
 import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
-import android.text.Html;
 
 import kentico.kentico_android_tv_app.data.models.Article;
 
@@ -17,7 +16,7 @@ public class ArticleDetailsDescription extends AbstractDetailsDescriptionPresent
 
         if (article != null) {
             viewHolder.getTitle().setText(article.getTitle());
-            viewHolder.getBody().setText(Html.fromHtml(article.getBodyCopy()));
+            viewHolder.getBody().setText(article.getSummary());
         }
     }
 }
