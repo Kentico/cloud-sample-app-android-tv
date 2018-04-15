@@ -12,16 +12,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import kentico.kentico_android_tv_app.R;
-import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
-import kentico.kentico_android_tv_app.data.models.Cafe;
-import kentico.kentico_android_tv_app.data.models.ShopItem;
 
-/*
- * A CardPresenter is used to generate Views and bind Objects to them on demand.
- * It contains an Image CardView
- */
-public class CardPresenter extends Presenter {
+public class ArticleCardPresenter extends Presenter {
     private static final int CARD_WIDTH = 400;
     private static final int CARD_HEIGHT = 176;
     private static int sSelectedBackgroundColor;
@@ -38,8 +31,6 @@ public class CardPresenter extends Presenter {
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         sDefaultBackgroundColor = parent.getResources().getColor(R.color.default_background);
         sSelectedBackgroundColor = parent.getResources().getColor(R.color.selected_background);
-
-//        ContextThemeWrapper wrapper = new ContextThemeWrapper(parent.getContext(), R.style.CustomImageCardViewStyle);
 
         ImageCardView cardView = new ImageCardView(parent.getContext()) {
             @Override
@@ -71,53 +62,6 @@ public class CardPresenter extends Presenter {
                 cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
                 Glide.with(viewHolder.view.getContext())
                         .load(article.getTeaserImageUrl())
-                        .centerCrop()
-                        .into(cardView.getMainImageView());
-            }
-        }
-
-        if (item.getClass() == ShopItem.class) {
-            ShopItem shopItem = (ShopItem) item;
-            ImageCardView cardView = (ImageCardView) viewHolder.view;
-            int shopItemCardWidth = 313;
-
-            if (shopItem.image != null) {
-                cardView.setTitleText(shopItem.getProductName());
-                cardView.setContentText(String.valueOf(shopItem.getPrice()));
-                cardView.setMainImageDimensions(shopItemCardWidth, CARD_HEIGHT);
-                Glide.with(viewHolder.view.getContext())
-                        .load(shopItem.getImageUrl())
-                        .centerCrop()
-                        .into(cardView.getMainImageView());
-            }
-        }
-
-        if (item.getClass() == Cafe.class) {
-            Cafe cafe = (Cafe) item;
-            ImageCardView cardView = (ImageCardView) viewHolder.view;
-            int cafeCardWidth = 313;
-
-            if (cafe.photo != null) {
-                cardView.setTitleText(cafe.getCountry());
-                cardView.setContentText(cafe.getAddress());
-                cardView.setMainImageDimensions(cafeCardWidth, CARD_HEIGHT);
-                Glide.with(viewHolder.view.getContext())
-                        .load(cafe.getPhotoUrl())
-                        .centerCrop()
-                        .into(cardView.getMainImageView());
-            }
-        }
-
-        if (item.getClass() == About.class) {
-            About about = (About) item;
-            ImageCardView cardView = (ImageCardView) viewHolder.view;
-            int aboutCardWidth = 350;
-
-            if (about.image != null) {
-                cardView.setTitleText(about.getTitle());
-                cardView.setMainImageDimensions(aboutCardWidth, CARD_HEIGHT);
-                Glide.with(viewHolder.view.getContext())
-                        .load(about.getImageUrl())
                         .centerCrop()
                         .into(cardView.getMainImageView());
             }

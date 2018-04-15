@@ -36,7 +36,10 @@ import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
 import kentico.kentico_android_tv_app.details.article.ArticleDetailsActivity;
 import kentico.kentico_android_tv_app.details.cafe.CafeDetailsActivity;
-import kentico.kentico_android_tv_app.presenters.CardPresenter;
+import kentico.kentico_android_tv_app.presenters.AboutCardPresenter;
+import kentico.kentico_android_tv_app.presenters.ArticleCardPresenter;
+import kentico.kentico_android_tv_app.presenters.CafeCardPresenter;
+import kentico.kentico_android_tv_app.presenters.ShopCardPresenter;
 
 /**
  * Created by Juraj on 25.03.2018.
@@ -101,7 +104,7 @@ public class MainFragment extends BrowseFragment {
     }
 
     private void loadArticlesRow(List<Article> articles) {
-        CardPresenter cardPresenter = new CardPresenter();
+        ArticleCardPresenter cardPresenter = new ArticleCardPresenter();
 
         ArrayObjectAdapter articlesRowAdapter = new ArrayObjectAdapter(cardPresenter);
         for (int j = 0; j < articles.size(); j++) {
@@ -124,7 +127,7 @@ public class MainFragment extends BrowseFragment {
     }
 
     private void loadShopRow(List<ShopItem> items) {
-        CardPresenter cardPresenter = new CardPresenter();
+        ShopCardPresenter cardPresenter = new ShopCardPresenter();
 
         ArrayObjectAdapter itemsRowAdapter = new ArrayObjectAdapter(cardPresenter);
         for (int j = 0; j < items.size(); j++) {
@@ -137,7 +140,7 @@ public class MainFragment extends BrowseFragment {
     }
 
     private void loadCafesRow(List<Cafe> cafes) {
-        CardPresenter cardPresenter = new CardPresenter();
+        CafeCardPresenter cardPresenter = new CafeCardPresenter();
 
         ArrayObjectAdapter cafesRowAdapter = new ArrayObjectAdapter(cardPresenter);
         for (int j = 0; j < cafes.size(); j++) {
@@ -150,7 +153,7 @@ public class MainFragment extends BrowseFragment {
     }
 
     private void loadAboutRow(List<About> abouts) {
-        CardPresenter cardPresenter = new CardPresenter();
+        AboutCardPresenter cardPresenter = new AboutCardPresenter();
 
         ArrayObjectAdapter aboutsRowAdapter = new ArrayObjectAdapter(cardPresenter);
         for (int j = 0; j < abouts.size(); j++) {
