@@ -25,15 +25,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.kenticocloud.delivery_core.models.item.ContentItem;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
-import kentico.kentico_android_tv_app.data.models.ShopItem;
 import kentico.kentico_android_tv_app.details.article.ArticleDetailsActivity;
 import kentico.kentico_android_tv_app.details.cafe.CafeDetailsActivity;
 import kentico.kentico_android_tv_app.presenters.AboutCardPresenter;
@@ -47,13 +46,14 @@ import kentico.kentico_android_tv_app.presenters.ShopCardPresenter;
 
 public class MainFragment extends BrowseFragment {
     private static final int BACKGROUND_UPDATE_DELAY = 300;
-    private static final int GRID_ITEM_WIDTH = 200;
-    private static final int GRID_ITEM_HEIGHT = 200;
-    private static final int NUM_ROWS = 6;
-    private static final int NUM_COLS = 15;
 
     private final Handler mHandler = new Handler();
     private ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+    private AboutCardPresenter mAboutPresenter = new AboutCardPresenter();
+    private ArticleCardPresenter mArticlePresenter = new ArticleCardPresenter();
+    private CafeCardPresenter mCafePresenter = new CafeCardPresenter();
+    private ShopCardPresenter mShopPresenter = new ShopCardPresenter();
+
     private Drawable mDefaultBackground;
     private DisplayMetrics mMetrics;
     private Timer mBackgroundTimer;
@@ -70,10 +70,10 @@ public class MainFragment extends BrowseFragment {
 
         setupUIElements();
 
-        loadArticlesRow(MainApplication.getArticlesList());
-        loadShopRow(MainApplication.getShopList());
-        loadCafesRow(MainApplication.getCafesList());
-        loadAboutRow(MainApplication.getAboutList());
+        loadRow(MainApplication.getArticlesList(), mArticlePresenter, R.string.articles);
+        loadRow(MainApplication.getShopList(), mShopPresenter, R.string.shop);
+        loadRow(MainApplication.getCafesList(), mCafePresenter, R.string.cafes);
+        loadRow(MainApplication.getAboutList(), mAboutPresenter, R.string.abouts);
 
         setupEventListeners();
     }
@@ -103,58 +103,16 @@ public class MainFragment extends BrowseFragment {
         setSearchAffordanceColor(getResources().getColor(R.color.search_opaque));
     }
 
-    private void loadArticlesRow(List<Article> articles) {
-        ArticleCardPresenter cardPresenter = new ArticleCardPresenter();
-
-        ArrayObjectAdapter articlesRowAdapter = new ArrayObjectAdapter(cardPresenter);
-        for (int j = 0; j < articles.size(); j++) {
-            articlesRowAdapter.add(articles.get(j));
-        }
-        HeaderItem header = new HeaderItem(0, getResources().getString(R.string.articles));
-        mRowsAdapter.add(new ListRow(header, articlesRowAdapter));
-
-        setAdapter(mRowsAdapter);
-    }
-
-    private void loadShopRow(List<ShopItem> items) {
-        ShopCardPresenter cardPresenter = new ShopCardPresenter();
-
-        ArrayObjectAdapter itemsRowAdapter = new ArrayObjectAdapter(cardPresenter);
+    private <T extends ContentItem> void loadRow(List<T> items, Presenter presenter, int headerId) {
+        ArrayObjectAdapter rowAdapter = new ArrayObjectAdapter(presenter);
         for (int j = 0; j < items.size(); j++) {
-            itemsRowAdapter.add(items.get(j));
+            rowAdapter.add(items.get(j));
         }
-        HeaderItem header = new HeaderItem(0, getResources().getString(R.string.shop));
-        mRowsAdapter.add(new ListRow(header, itemsRowAdapter));
+        HeaderItem header = new HeaderItem(0, getResources().getString(headerId));
+        mRowsAdapter.add(new ListRow(header, rowAdapter));
 
         setAdapter(mRowsAdapter);
     }
-
-    private void loadCafesRow(List<Cafe> cafes) {
-        CafeCardPresenter cardPresenter = new CafeCardPresenter();
-
-        ArrayObjectAdapter cafesRowAdapter = new ArrayObjectAdapter(cardPresenter);
-        for (int j = 0; j < cafes.size(); j++) {
-            cafesRowAdapter.add(cafes.get(j));
-        }
-        HeaderItem header = new HeaderItem(0, getResources().getString(R.string.cafes));
-        mRowsAdapter.add(new ListRow(header, cafesRowAdapter));
-
-        setAdapter(mRowsAdapter);
-    }
-
-    private void loadAboutRow(List<About> abouts) {
-        AboutCardPresenter cardPresenter = new AboutCardPresenter();
-
-        ArrayObjectAdapter aboutsRowAdapter = new ArrayObjectAdapter(cardPresenter);
-        for (int j = 0; j < abouts.size(); j++) {
-            aboutsRowAdapter.add(abouts.get(j));
-        }
-        HeaderItem header = new HeaderItem(0, getResources().getString(R.string.abouts));
-        mRowsAdapter.add(new ListRow(header, aboutsRowAdapter));
-
-        setAdapter(mRowsAdapter);
-    }
-
 
     private void setupEventListeners() {
         setOnSearchClickedListener(new View.OnClickListener() {
