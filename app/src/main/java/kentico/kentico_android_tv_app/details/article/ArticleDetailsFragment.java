@@ -69,7 +69,6 @@ public class ArticleDetailsFragment extends DetailsFragment {
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
             setupDetailsOverviewRow();
             setupDetailsOverviewRowPresenter();
-//            setupRelatedArticleListRow();
             setAdapter(mAdapter);
             initializeBackground();
             setOnItemViewClickedListener(new ItemViewClickedListener());
@@ -168,21 +167,6 @@ public class ArticleDetailsFragment extends DetailsFragment {
 
         mPresenterSelector.addClassPresenter(DetailsOverviewRow.class, detailsPresenter);
     }
-
-//    private void setupRelatedArticleListRow() {
-//        String subcategories[] = {getString(R.string.related_movies)};
-//        List<Article> list = List.getList();
-//
-//        Collections.shuffle(list);
-//        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
-//        for (int j = 0; j < NUM_COLS; j++) {
-//            listRowAdapter.add(list.get(j % 5));
-//        }
-//
-//        HeaderItem header = new HeaderItem(0, subcategories[0]);
-//        mAdapter.add(new ListRow(header, listRowAdapter));
-//        mPresenterSelector.addClassPresenter(ListRow.class, new ListRowPresenter());
-//    }
 
     public int convertDpToPixel(Context context, int dp) {
         float density = context.getResources().getDisplayMetrics().density;

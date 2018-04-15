@@ -113,17 +113,7 @@ public class MainFragment extends BrowseFragment {
         HeaderItem header = new HeaderItem(0, getResources().getString(R.string.articles));
         mRowsAdapter.add(new ListRow(header, articlesRowAdapter));
 
-//
-//        HeaderItem gridHeader = new HeaderItem(0, "PREFERENCES");
-//
-//        GridItemPresenter mGridPresenter = new GridItemPresenter();
-//        ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
-//        gridRowAdapter.add("view");
-//        gridRowAdapter.add("error");
-//        gridRowAdapter.add("settings or whatever");
-//        mRowsAdapter.add(new ListRow(gridHeader, gridRowAdapter));
-
-//        setAdapter(mRowsAdapter);
+        setAdapter(mRowsAdapter);
     }
 
     private void loadShopRow(List<ShopItem> items) {

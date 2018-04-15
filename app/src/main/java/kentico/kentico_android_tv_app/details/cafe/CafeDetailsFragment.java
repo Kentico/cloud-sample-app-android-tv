@@ -67,7 +67,6 @@ public class CafeDetailsFragment extends DetailsFragment {
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
             setupDetailsOverviewRow();
             setupDetailsOverviewRowPresenter();
-//            setupRelatedCafeListRow();
             setAdapter(mAdapter);
             initializeBackground(mSelectedCafe);
             setOnItemViewClickedListener(new CafeDetailsFragment.ItemViewClickedListener());
