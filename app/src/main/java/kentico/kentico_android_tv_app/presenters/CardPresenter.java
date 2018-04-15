@@ -1,4 +1,4 @@
-package kentico.kentico_android_tv_app;
+package kentico.kentico_android_tv_app.presenters;
 
 /**
  * Created by Juraj on 27.03.2018.
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import kentico.kentico_android_tv_app.R;
 import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
