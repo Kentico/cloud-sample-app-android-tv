@@ -152,8 +152,14 @@ public class CafeDetailsFragment extends DetailsFragment {
         detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
             @Override
             public void onActionClicked(Action action) {
-                if (action.getId() == ACTION_RETURN_BACK) {
-                    CafeDetailsFragment.super.getActivity().onBackPressed();
+                switch ((int) action.getId()) {
+                    case ACTION_SHOW:
+                        break;
+                    case ACTION_CONTACT:
+                        break;
+                    case ACTION_RETURN_BACK:
+                        CafeDetailsFragment.super.getActivity().onBackPressed();
+                        break;
                 }
             }
         });

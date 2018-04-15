@@ -154,16 +154,17 @@ public class ArticleDetailsFragment extends DetailsFragment {
         detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
             @Override
             public void onActionClicked(Action action) {
-                if (action.getId() == ACTION_READ_MORE) {
-
-                }
-                if (action.getId() == ACTION_ABOUT_US) {
-                }
-                if (action.getId() == ACTION_RETURN_BACK) {
-                    ArticleDetailsFragment.super.getActivity().onBackPressed();
+                switch ((int) action.getId()) {
+                    case ACTION_READ_MORE:
+                        break;
+                    case ACTION_ABOUT_US:
+                        break;
+                    case ACTION_RETURN_BACK:
+                        ArticleDetailsFragment.super.getActivity().onBackPressed();
+                        break;
                 }
             }
-        });
+    });
 
         mPresenterSelector.addClassPresenter(DetailsOverviewRow.class, detailsPresenter);
     }
