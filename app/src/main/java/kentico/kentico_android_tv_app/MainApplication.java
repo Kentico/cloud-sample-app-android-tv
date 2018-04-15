@@ -68,7 +68,16 @@ public class MainApplication extends Application {
             List<T> list = new ArrayList<>();
 
             try {
-                MultipleItemQuery<T> query = deliveryService.<T>items().type(arg0[0]);
+                MultipleItemQuery<T> query;
+
+                switch (arg0[0]) {
+                    case Cafe.TYPE:
+                        query = deliveryService.<T>items().type(arg0[0]).equalsFilter("elements.country", "USA");
+                        break;
+                    default:
+                        query = deliveryService.<T>items().type(arg0[0]);
+                }
+
                 list = query.get().getItems();
             } catch (Exception e) {
                 e.printStackTrace();
