@@ -8,6 +8,7 @@ import com.kenticocloud.delivery_core.query.item.MultipleItemQuery;
 import com.kenticocloud.delivery_core.services.IDeliveryService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import kentico.kentico_android_tv_app.data.models.About;
@@ -15,6 +16,7 @@ import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
 import kentico.kentico_android_tv_app.injection.Injection;
+import kentico.kentico_android_tv_app.utils.ArticlesComparator;
 
 /**
  * Created by Juraj on 07.04.2018.
@@ -34,11 +36,15 @@ public class MainApplication extends Application {
 
         try {
             articlesList = copyList(new DefaultConnection<Article>().execute(Article.TYPE).get());
+            Collections.sort(articlesList, new ArticlesComparator());
+
             shopList = copyList(new DefaultConnection<ShopItem>().execute(ShopItem.COFFEE_TYPE).get());
             shopList.addAll(new DefaultConnection<ShopItem>().execute(ShopItem.BREWER_TYPE).get());
             shopList.addAll(new DefaultConnection<ShopItem>().execute(ShopItem.GRINDER_TYPE).get());
             shopList.addAll(new DefaultConnection<ShopItem>().execute(ShopItem.ACCESSORY_TYPE).get());
+
             cafesList = copyList(new DefaultConnection<Cafe>().execute(Cafe.TYPE).get());
+
             aboutList = copyList(new DefaultConnection<About>().execute(About.TYPE).get());
         } catch (Exception e) {
             e.printStackTrace();
