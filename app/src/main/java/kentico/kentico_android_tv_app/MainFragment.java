@@ -62,7 +62,7 @@ public class MainFragment extends BrowseFragment {
     private String mBackgroundUri;
     private BackgroundManager mBackgroundManager;
 
-    private static String articleDetailsImageUrl;
+    public static String articleDetailsImageUrl;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -142,7 +142,6 @@ public class MainFragment extends BrowseFragment {
 
                 int itemIndex = MainApplication.getArticlesList().indexOf(item);
                 intent.putExtra(ArticleDetailsActivity.ARTICLE, itemIndex);
-                intent.putExtra(ArticleDetailsActivity.BACKGROUND_IMAGE, articleDetailsImageUrl);
 
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
@@ -156,7 +155,6 @@ public class MainFragment extends BrowseFragment {
 
                 int itemIndex = MainApplication.getShopList().indexOf(item);
                 intent.putExtra(ShopItemDetailsActivity.SHOP_ITEM, itemIndex);
-//                intent.putExtra(ArticleDetailsActivity.BACKGROUND_IMAGE, articleDetailsImageUrl);
 
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),

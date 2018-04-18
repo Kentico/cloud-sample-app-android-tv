@@ -12,7 +12,10 @@ import android.support.v17.leanback.widget.ClassPresenterSelector;
 import android.support.v17.leanback.widget.DetailsOverviewRow;
 import android.support.v17.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import android.support.v17.leanback.widget.FullWidthDetailsOverviewSharedElementHelper;
+import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ImageCardView;
+import android.support.v17.leanback.widget.ListRow;
+import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnActionClickedListener;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
@@ -26,10 +29,14 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import java.util.List;
+
 import kentico.kentico_android_tv_app.MainActivity;
 import kentico.kentico_android_tv_app.MainApplication;
+import kentico.kentico_android_tv_app.MainFragment;
 import kentico.kentico_android_tv_app.R;
 import kentico.kentico_android_tv_app.data.models.Article;
+import kentico.kentico_android_tv_app.presenters.ArticleCardPresenter;
 
 /**
  * Created by Juraj on 02.04.2018.
@@ -44,7 +51,6 @@ public class ArticleDetailsFragment extends DetailsFragment {
     private static final int DETAIL_THUMB_HEIGHT = 274;
 
     private static Article mSelectedArticle;
-    private static String mBackgroundImageUrl;
 
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
@@ -61,7 +67,6 @@ public class ArticleDetailsFragment extends DetailsFragment {
         if (bundle != null) {
             int articleIndex = bundle.getInt(ArticleDetailsActivity.ARTICLE);
             mSelectedArticle = MainApplication.getArticlesList().get(articleIndex);
-            mBackgroundImageUrl = bundle.getString(ArticleDetailsActivity.BACKGROUND_IMAGE);
         }
 
         if (mSelectedArticle != null) {
@@ -69,6 +74,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
             setupDetailsOverviewRow();
             setupDetailsOverviewRowPresenter();
+            setupRelatedArticleListRow();
             setAdapter(mAdapter);
             initializeBackground();
             setOnItemViewClickedListener(new ItemViewClickedListener());
@@ -81,7 +87,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
     private void initializeBackground() {
         mDetailsBackground.enableParallax();
         Glide.with(getActivity())
-                .load(mBackgroundImageUrl)
+                .load(MainFragment.articleDetailsImageUrl)
                 .asBitmap()
                 .centerCrop()
                 .error(R.drawable.default_background)
@@ -134,6 +140,19 @@ public class ArticleDetailsFragment extends DetailsFragment {
         mAdapter.add(row);
     }
 
+    private void setupRelatedArticleListRow() {
+        List<Article> list = mSelectedArticle.relatedArticles.getValue();
+
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new ArticleCardPresenter());
+        for (int j = 0; j < list.size(); j++) {
+            listRowAdapter.add(list.get(j % 5));
+        }
+
+        HeaderItem header = new HeaderItem(0, getString(R.string.related_articles));
+        mAdapter.add(new ListRow(header, listRowAdapter));
+        mPresenterSelector.addClassPresenter(ListRow.class, new ListRowPresenter());
+    }
+
     private void setupDetailsOverviewRowPresenter() {
         // Set detail background.
         FullWidthDetailsOverviewRowPresenter detailsPresenter =
@@ -164,7 +183,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
                         break;
                 }
             }
-    });
+        });
 
         mPresenterSelector.addClassPresenter(DetailsOverviewRow.class, detailsPresenter);
     }
@@ -181,17 +200,14 @@ public class ArticleDetailsFragment extends DetailsFragment {
 
             if (item instanceof Article) {
                 Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
-                try {
-                    int itemIndex = MainApplication.getArticlesList().indexOf(item);
-                    intent.putExtra(ArticleDetailsActivity.ARTICLE, itemIndex);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
+                int itemIndex = MainApplication.getArticlesList().indexOf(item);
+                intent.putExtra(ArticleDetailsActivity.ARTICLE, itemIndex);
 
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                 ArticleDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+                        ArticleDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
                 getActivity().startActivity(intent, bundle);
             }
         }
