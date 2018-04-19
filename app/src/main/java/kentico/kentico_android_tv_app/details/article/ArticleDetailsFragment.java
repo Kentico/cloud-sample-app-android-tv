@@ -65,8 +65,8 @@ public class ArticleDetailsFragment extends DetailsFragment {
 
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
-            int articleIndex = bundle.getInt(ArticleDetailsActivity.ARTICLE);
-            mSelectedArticle = MainApplication.getArticlesList().get(articleIndex);
+            String articleTitle = bundle.getString(ArticleDetailsActivity.ARTICLE);
+            mSelectedArticle = MainApplication.getArticleByTitle(articleTitle);
         }
 
         if (mSelectedArticle != null) {
@@ -201,8 +201,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
             if (item instanceof Article) {
                 Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
 
-                int itemIndex = MainApplication.getArticlesList().indexOf(item);
-                intent.putExtra(ArticleDetailsActivity.ARTICLE, itemIndex);
+                intent.putExtra(ArticleDetailsActivity.ARTICLE, ((Article) item).getTitle());
 
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),

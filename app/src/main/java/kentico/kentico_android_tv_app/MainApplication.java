@@ -95,4 +95,14 @@ public class MainApplication extends Application {
     private static <T> List<T> copyList(List<T> source) {
         return new ArrayList<>(source);
     }
+
+    public static Article getArticleByTitle(String title) {
+        for (Article a: articlesList) {
+            if (a.getTitle().equals(title)) {
+                return a;
+            }
+        }
+
+        return articlesList.get(0);
+    }
 }

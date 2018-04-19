@@ -140,8 +140,7 @@ public class MainFragment extends BrowseFragment {
             if (item instanceof Article) {
                 Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
 
-                int itemIndex = MainApplication.getArticlesList().indexOf(item);
-                intent.putExtra(ArticleDetailsActivity.ARTICLE, itemIndex);
+                intent.putExtra(ArticleDetailsActivity.ARTICLE, ((Article) item).getTitle());
 
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
