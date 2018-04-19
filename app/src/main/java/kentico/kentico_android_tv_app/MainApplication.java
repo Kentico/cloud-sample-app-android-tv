@@ -15,6 +15,7 @@ import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
+import kentico.kentico_android_tv_app.data.models.Video;
 import kentico.kentico_android_tv_app.injection.Injection;
 import kentico.kentico_android_tv_app.utils.ArticlesComparator;
 
@@ -30,6 +31,7 @@ public class MainApplication extends Application {
     private static List<Cafe> cafesList;
     private static List<About> aboutList;
     private static List<ShopItem> shopList;
+    private static List<Video> videosList;
 
     public void onCreate() {
         super.onCreate();
@@ -46,6 +48,8 @@ public class MainApplication extends Application {
             cafesList = copyList(new DefaultConnection<Cafe>().execute(Cafe.TYPE).get());
 
             aboutList = copyList(new DefaultConnection<About>().execute(About.TYPE).get());
+
+            videosList = copyList(new DefaultConnection<Video>().execute(Video.TYPE).get());
         } catch (Exception e) {
             e.printStackTrace();
         }

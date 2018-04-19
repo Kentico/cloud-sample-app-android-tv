@@ -22,6 +22,7 @@ import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
+import kentico.kentico_android_tv_app.data.models.Video;
 
 public class AppConfig {
     public final static String KENTICO_CLOUD_PROJECT_ID = "64814f50-a12e-4431-b491-2d24613693ab";
@@ -91,6 +92,15 @@ public class AppConfig {
             @Override
             public ShopItem apply(@Nullable Void input) {
                 return new ShopItem(ShopItem.ACCESSORY_TYPE);
+            }
+        }));
+
+        // Video resolver
+        typeResolvers.add(new TypeResolver<>(Video.TYPE, new Function<Void, Video>() {
+            @Nullable
+            @Override
+            public Video apply(@Nullable Void input) {
+                return new Video();
             }
         }));
 
