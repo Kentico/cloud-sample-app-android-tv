@@ -36,6 +36,7 @@ import kentico.kentico_android_tv_app.MainApplication;
 import kentico.kentico_android_tv_app.MainFragment;
 import kentico.kentico_android_tv_app.R;
 import kentico.kentico_android_tv_app.data.models.Article;
+import kentico.kentico_android_tv_app.details.video.VideoActivity;
 import kentico.kentico_android_tv_app.presenters.ArticleCardPresenter;
 
 /**
@@ -177,6 +178,9 @@ public class ArticleDetailsFragment extends DetailsFragment {
                     case ACTION_READ_MORE:
                         break;
                     case ACTION_ABOUT_US:
+                        Intent intent = new Intent(getActivity(), VideoActivity.class);
+                        getActivity().startActivity(intent);
+
                         break;
                     case ACTION_RETURN_BACK:
                         ArticleDetailsFragment.super.getActivity().onBackPressed();

@@ -34,6 +34,13 @@
         <activity android:name=".details.cafe.CafeDetailsActivity" />
         <activity android:name=".details.shopItem.ShopItemDetailsActivity"/>
 
+        <activity
+            android:name=".details.video.VideoActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Leanback"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection"
+            android:launchMode="singleTask" />
+
     </application>
 
 </manifest>

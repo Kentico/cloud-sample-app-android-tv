@@ -71,6 +71,10 @@ public class MainApplication extends Application {
         return shopList;
     }
 
+    public static List<Video> getVideosList() {
+        return videosList;
+    }
+
     private static class DefaultConnection<T extends ContentItem> extends AsyncTask<String, Object, List<T>> {
 
         @Override

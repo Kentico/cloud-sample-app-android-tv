@@ -7,7 +7,7 @@ import com.kenticocloud.delivery_core.models.item.ElementMapping;
 
 public class Video extends ContentItem {
 
-    public static final String TYPE = "video_host";
+    public static final String TYPE = "hosted_video";
 
     @ElementMapping("video_id")
     public TextElement id;
