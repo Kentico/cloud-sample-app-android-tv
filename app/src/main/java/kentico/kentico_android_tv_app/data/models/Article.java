@@ -19,12 +19,16 @@ import com.kenticocloud.delivery_core.elements.models.AssetModel;
 import com.kenticocloud.delivery_core.models.item.ContentItem;
 import com.kenticocloud.delivery_core.models.item.ElementMapping;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public final class Article extends ContentItem {
 
     public static final String TYPE = "article";
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
     @ElementMapping("summary")
     public TextElement summary;
@@ -63,6 +67,10 @@ public final class Article extends ContentItem {
 
     public Date getPostDate() {
         return postDate.getValue();
+    }
+
+    public String getFormattedDate() {
+        return dateFormat.format(postDate.getValue());
     }
 
     public String getSummary() {

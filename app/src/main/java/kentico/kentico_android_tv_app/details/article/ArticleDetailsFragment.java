@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v17.leanback.app.DetailsFragment;
 import android.support.v17.leanback.app.DetailsFragmentBackgroundController;
 import android.support.v17.leanback.widget.Action;
@@ -23,6 +24,8 @@ import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -56,13 +59,11 @@ public class ArticleDetailsFragment extends DetailsFragment {
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
 
-    private DetailsFragmentBackgroundController mDetailsBackground;
+    private final DetailsFragmentBackgroundController mDetailsBackground = new DetailsFragmentBackgroundController(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mDetailsBackground = new DetailsFragmentBackgroundController(this);
 
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
@@ -73,9 +74,13 @@ public class ArticleDetailsFragment extends DetailsFragment {
         if (mSelectedArticle != null) {
             mPresenterSelector = new ClassPresenterSelector();
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
-            setupDetailsOverviewRow();
+
             setupDetailsOverviewRowPresenter();
-            setupRelatedArticleListRow();
+
+            if (mSelectedArticle.getRelatedArticles().size() > 0) {
+                setupRelatedArticleListRow();
+            }
+
             setAdapter(mAdapter);
             initializeBackground();
             setOnItemViewClickedListener(new ItemViewClickedListener());
@@ -124,10 +129,13 @@ public class ArticleDetailsFragment extends DetailsFragment {
 
         ArrayObjectAdapter actionAdapter = new ArrayObjectAdapter();
 
-        actionAdapter.add(
-                new Action(
-                        ACTION_READ_MORE,
-                        getResources().getString(R.string.article_read_more)));
+        if (mSelectedArticle.getRelatedArticles().size() > 0) {
+            actionAdapter.add(
+                    new Action(
+                            ACTION_READ_MORE,
+                            getResources().getString(R.string.article_read_more)));
+        }
+
         actionAdapter.add(
                 new Action(
                         ACTION_ABOUT_US,
@@ -155,27 +163,47 @@ public class ArticleDetailsFragment extends DetailsFragment {
     }
 
     private void setupDetailsOverviewRowPresenter() {
-        // Set detail background.
-        FullWidthDetailsOverviewRowPresenter detailsPresenter =
-                new FullWidthDetailsOverviewRowPresenter(new ArticleDetailsDescription());
-        detailsPresenter.setBackgroundColor(
-                ContextCompat.getColor(getActivity(), R.color.selected_background));
-        detailsPresenter.setActionsBackgroundColor(
-                ContextCompat.getColor(getActivity(), R.color.fastlane_background));
+        FullWidthDetailsOverviewRowPresenter detailsPresenter = new FullWidthDetailsOverviewRowPresenter(
+                new ArticleDetailsDescription(getActivity().getApplicationContext())) {
 
-        // Hook up transition element.
-        FullWidthDetailsOverviewSharedElementHelper sharedElementHelper =
-                new FullWidthDetailsOverviewSharedElementHelper();
-        sharedElementHelper.setSharedElementEnterTransition(
-                getActivity(), ArticleDetailsActivity.SHARED_ELEMENT_NAME);
-        detailsPresenter.setListener(sharedElementHelper);
-        detailsPresenter.setParticipatingEntranceTransition(true);
+            @Override
+            protected RowPresenter.ViewHolder createRowViewHolder(ViewGroup parent) {
+                RowPresenter.ViewHolder viewHolder = super.createRowViewHolder(parent);
+
+                View actionsView = viewHolder.view.
+                        findViewById(R.id.details_overview_actions_background);
+                actionsView.setBackgroundColor(getActivity().getResources().
+                        getColor(R.color.fastlane_background));
+
+                View detailsView = viewHolder.view.findViewById(R.id.details_frame);
+                detailsView.setBackgroundColor(
+                        getResources().getColor(R.color.selected_background));
+                return viewHolder;
+            }
+        };
+
+        FullWidthDetailsOverviewSharedElementHelper mHelper = new FullWidthDetailsOverviewSharedElementHelper();
+        mHelper.setSharedElementEnterTransition(getActivity(), ArticleDetailsActivity.SHARED_ELEMENT_NAME);
+        detailsPresenter.setListener(mHelper);
+        detailsPresenter.setParticipatingEntranceTransition(false);
+        prepareEntranceTransition();
+
+        ListRowPresenter shadowDisabledRowPresenter = new ListRowPresenter();
+        shadowDisabledRowPresenter.setShadowEnabled(false);
+
+        ClassPresenterSelector detailsPresenterSelector = new ClassPresenterSelector();
+        detailsPresenterSelector.addClassPresenter(DetailsOverviewRow.class, detailsPresenter);
+        detailsPresenterSelector.addClassPresenter(ListRow.class, new ListRowPresenter());
+        mAdapter = new ArrayObjectAdapter(detailsPresenterSelector);
+
+        setupDetailsOverviewRow();
 
         detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
             @Override
             public void onActionClicked(Action action) {
                 switch ((int) action.getId()) {
                     case ACTION_READ_MORE:
+                        setSelectedPosition(1);
                         break;
                     case ACTION_ABOUT_US:
                         Intent intent = new Intent(getActivity(), VideoActivity.class);
@@ -190,6 +218,13 @@ public class ArticleDetailsFragment extends DetailsFragment {
         });
 
         mPresenterSelector.addClassPresenter(DetailsOverviewRow.class, detailsPresenter);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startEntranceTransition();
+            }
+        }, 500);
     }
 
     public int convertDpToPixel(Context context, int dp) {

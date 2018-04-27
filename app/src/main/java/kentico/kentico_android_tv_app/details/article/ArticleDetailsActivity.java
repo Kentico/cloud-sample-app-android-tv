@@ -17,5 +17,12 @@ public class ArticleDetailsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        if (savedInstanceState == null) {
+            ArticleDetailsFragment fragment = new ArticleDetailsFragment();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.details_fragment, fragment)
+                    .commit();
+        }
     }
 }
