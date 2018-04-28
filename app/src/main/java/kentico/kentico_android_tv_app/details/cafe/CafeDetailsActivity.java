@@ -16,6 +16,13 @@ public class CafeDetailsActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cafe_details);
+        setContentView(R.layout.activity_details);
+
+        if (savedInstanceState == null) {
+            CafeDetailsFragment fragment = new CafeDetailsFragment();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.details_fragment, fragment)
+                    .commit();
+        }
     }
 }

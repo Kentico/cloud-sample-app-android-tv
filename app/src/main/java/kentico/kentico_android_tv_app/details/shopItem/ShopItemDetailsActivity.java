@@ -12,7 +12,7 @@ public class ShopItemDetailsActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shop_item_details);
+        setContentView(R.layout.activity_details);
 
         if (savedInstanceState == null) {
             ShopItemDetailsFragment fragment = new ShopItemDetailsFragment();

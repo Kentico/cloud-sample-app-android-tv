@@ -185,7 +185,6 @@ public class ShopItemDetailsFragment extends DetailsFragment {
 
         mPresenterSelector.addClassPresenter(DetailsOverviewRow.class, detailsPresenter);
 
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

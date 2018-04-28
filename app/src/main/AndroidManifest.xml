@@ -35,7 +35,10 @@
             android:exported="true"
             android:theme="@style/Theme.Example.LeanbackDetails"/>
 
-        <activity android:name=".details.cafe.CafeDetailsActivity" />
+        <activity
+            android:name=".details.cafe.CafeDetailsActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Example.LeanbackDetails"/>
 
         <activity
             android:name=".details.shopItem.ShopItemDetailsActivity"
