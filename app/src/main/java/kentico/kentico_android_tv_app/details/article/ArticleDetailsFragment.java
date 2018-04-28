@@ -59,7 +59,8 @@ public class ArticleDetailsFragment extends DetailsFragment {
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
 
-    private final DetailsFragmentBackgroundController mDetailsBackground = new DetailsFragmentBackgroundController(this);
+    private final DetailsFragmentBackgroundController mDetailsBackground
+            = new DetailsFragmentBackgroundController(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -26,7 +26,7 @@ public class ArticleDetailsDescription extends Presenter {
     }
 
     @Override public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.detail_view_content, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.detail_view_layout, null);
         return new ViewHolder(view);
     }
 

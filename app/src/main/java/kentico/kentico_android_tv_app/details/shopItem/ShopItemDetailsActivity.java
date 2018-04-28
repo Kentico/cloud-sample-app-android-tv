@@ -13,5 +13,12 @@ public class ShopItemDetailsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shop_item_details);
+
+        if (savedInstanceState == null) {
+            ShopItemDetailsFragment fragment = new ShopItemDetailsFragment();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.details_fragment, fragment)
+                    .commit();
+        }
     }
 }
