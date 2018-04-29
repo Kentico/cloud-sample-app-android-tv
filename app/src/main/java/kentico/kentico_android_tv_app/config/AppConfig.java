@@ -21,6 +21,7 @@ import io.reactivex.functions.Function;
 import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
+import kentico.kentico_android_tv_app.data.models.HeroUnit;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
 import kentico.kentico_android_tv_app.data.models.Video;
 
@@ -101,6 +102,15 @@ public class AppConfig {
             @Override
             public Video apply(@Nullable Void input) {
                 return new Video();
+            }
+        }));
+
+        // Hero Unit resolver
+        typeResolvers.add(new TypeResolver<>(HeroUnit.TYPE, new Function<Void, HeroUnit>() {
+            @Nullable
+            @Override
+            public HeroUnit apply(@Nullable Void input) {
+                return new HeroUnit();
             }
         }));
 

@@ -33,6 +33,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 
 import kentico.kentico_android_tv_app.MainActivity;
 import kentico.kentico_android_tv_app.MainApplication;
+import kentico.kentico_android_tv_app.MainFragment;
 import kentico.kentico_android_tv_app.R;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 
@@ -71,7 +72,7 @@ public class CafeDetailsFragment extends DetailsFragment {
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
             setupDetailsOverviewRowPresenter();
             setAdapter(mAdapter);
-            initializeBackground(mSelectedCafe);
+            initializeBackground();
             setOnItemViewClickedListener(new CafeDetailsFragment.ItemViewClickedListener());
         } else {
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -79,10 +80,10 @@ public class CafeDetailsFragment extends DetailsFragment {
         }
     }
 
-    private void initializeBackground(Cafe data) {
+    private void initializeBackground() {
         mDetailsBackground.enableParallax();
         Glide.with(getActivity())
-                .load(data.getPhotoUrl())
+                .load(MainFragment.cupOfCoffeeImageUrl)
                 .asBitmap()
                 .centerCrop()
                 .error(R.drawable.default_background)

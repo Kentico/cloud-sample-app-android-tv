@@ -64,7 +64,8 @@ public class MainFragment extends BrowseFragment {
     private String mBackgroundUri;
     private BackgroundManager mBackgroundManager;
 
-    public static String articleDetailsImageUrl;
+    public static String beanBagImageUrl = MainApplication.getUnitsList().get(0).getImageUrl();
+    public static String cupOfCoffeeImageUrl = MainApplication.getUnitsList().get(1).getImageUrl();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -127,8 +128,6 @@ public class MainFragment extends BrowseFragment {
                         .show();
             }
         });
-
-        articleDetailsImageUrl = MainApplication.getAboutList().get(MainApplication.getAboutList().size() - 1).getImageUrl();
 
         setOnItemViewClickedListener(new ItemViewClickedListener());
         setOnItemViewSelectedListener(new ItemViewSelectedListener());
@@ -211,6 +210,10 @@ public class MainFragment extends BrowseFragment {
             }
             if (item instanceof Cafe) {
                 mBackgroundUri = ((Cafe) item).getPhotoUrl();
+                startBackgroundTimer();
+            }
+            if (item instanceof About) {
+                mBackgroundUri = ((About) item).getImageUrl();
                 startBackgroundTimer();
             }
         }

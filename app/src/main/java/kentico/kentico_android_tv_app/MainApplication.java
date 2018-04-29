@@ -14,6 +14,7 @@ import java.util.List;
 import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
+import kentico.kentico_android_tv_app.data.models.HeroUnit;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
 import kentico.kentico_android_tv_app.data.models.Video;
 import kentico.kentico_android_tv_app.injection.Injection;
@@ -32,6 +33,7 @@ public class MainApplication extends Application {
     private static List<About> aboutList;
     private static List<ShopItem> shopList;
     private static List<Video> videosList;
+    private static List<HeroUnit> unitsList;
 
     public void onCreate() {
         super.onCreate();
@@ -50,6 +52,8 @@ public class MainApplication extends Application {
             aboutList = copyList(new DefaultConnection<About>().execute(About.TYPE).get());
 
             videosList = copyList(new DefaultConnection<Video>().execute(Video.TYPE).get());
+
+            unitsList = copyList(new DefaultConnection<HeroUnit>().execute(HeroUnit.TYPE).get());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,6 +78,8 @@ public class MainApplication extends Application {
     public static List<Video> getVideosList() {
         return videosList;
     }
+
+    public static List<HeroUnit> getUnitsList() { return unitsList; }
 
     private static class DefaultConnection<T extends ContentItem> extends AsyncTask<String, Object, List<T>> {
 

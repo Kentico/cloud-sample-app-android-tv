@@ -42,6 +42,8 @@ import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.details.video.VideoActivity;
 import kentico.kentico_android_tv_app.presenters.ArticleCardPresenter;
 
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
+
 /**
  * Created by Juraj on 02.04.2018.
  */
@@ -95,8 +97,9 @@ public class ArticleDetailsFragment extends DetailsFragment {
     private void initializeBackground() {
         mDetailsBackground.enableParallax();
         Glide.with(getActivity())
-                .load(MainFragment.articleDetailsImageUrl)
+                .load(MainFragment.beanBagImageUrl)
                 .asBitmap()
+                .format(PREFER_ARGB_8888)
                 .centerCrop()
                 .error(R.drawable.default_background)
                 .into(new SimpleTarget<Bitmap>() {

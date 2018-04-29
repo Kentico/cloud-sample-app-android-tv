@@ -35,6 +35,8 @@ import kentico.kentico_android_tv_app.MainApplication;
 import kentico.kentico_android_tv_app.R;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
 
+import static kentico.kentico_android_tv_app.utils.ImageCreator.createImage;
+
 public class ShopItemDetailsFragment extends DetailsFragment {
     private static final int ACTION_PARAMETERS = 1;
     private static final int ACTION_ADD_TO_CART = 2;
@@ -66,7 +68,7 @@ public class ShopItemDetailsFragment extends DetailsFragment {
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
             setupDetailsOverviewRowPresenter();
             setAdapter(mAdapter);
-            initializeBackground(mSelectedItem);
+            initializeBackground();
             setOnItemViewClickedListener(new ShopItemDetailsFragment.ItemViewClickedListener());
         } else {
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -74,22 +76,9 @@ public class ShopItemDetailsFragment extends DetailsFragment {
         }
     }
 
-    private void initializeBackground(ShopItem data) {
+    private void initializeBackground() {
         mDetailsBackground.enableParallax();
-        // TODO pridam iny obrazok pozadia
-//        Glide.with(getActivity())
-////                .load(data)
-////                .asBitmap()
-////                .centerCrop()
-////                .error(R.drawable.default_background)
-////                .into(new SimpleTarget<Bitmap>() {
-////                    @Override
-////                    public void onResourceReady(Bitmap bitmap,
-////                                                GlideAnimation<? super Bitmap> glideAnimation) {
-////                        mDetailsBackground.setCoverBitmap(bitmap);
-////                        mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size());
-////                    }
-////                });
+        mDetailsBackground.setCoverBitmap(createImage(500, 500, getResources().getColor(R.color.selected_background)));
     }
 
     private void setupDetailsOverviewRow() {

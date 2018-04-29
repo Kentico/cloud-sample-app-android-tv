@@ -2,6 +2,7 @@ package kentico.kentico_android_tv_app.details.about;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v17.leanback.app.DetailsFragment;
@@ -32,8 +33,11 @@ import com.bumptech.glide.request.target.SimpleTarget;
 
 import kentico.kentico_android_tv_app.MainActivity;
 import kentico.kentico_android_tv_app.MainApplication;
+import kentico.kentico_android_tv_app.MainFragment;
 import kentico.kentico_android_tv_app.R;
 import kentico.kentico_android_tv_app.data.models.About;
+
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 public class AboutDetailsFragment extends DetailsFragment {
     private static final int ACTION_RETURN_BACK = 1;
@@ -64,7 +68,7 @@ public class AboutDetailsFragment extends DetailsFragment {
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
             setupDetailsOverviewRowPresenter();
             setAdapter(mAdapter);
-            initializeBackground(mSelectedItem);
+            initializeBackground();
             setOnItemViewClickedListener(new AboutDetailsFragment.ItemViewClickedListener());
         } else {
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -72,8 +76,22 @@ public class AboutDetailsFragment extends DetailsFragment {
         }
     }
 
-    private void initializeBackground(About data) {
+    private void initializeBackground() {
         mDetailsBackground.enableParallax();
+        Glide.with(getActivity())
+                .load(MainFragment.beanBagImageUrl)
+                .asBitmap()
+                .format(PREFER_ARGB_8888)
+                .centerCrop()
+                .error(R.drawable.default_background)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap,
+                                                GlideAnimation<? super Bitmap> glideAnimation) {
+                        mDetailsBackground.setCoverBitmap(bitmap);
+                        mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size());
+                    }
+                });
     }
 
     private void setupDetailsOverviewRow() {
