@@ -50,6 +50,7 @@ public class ArticleDetailsFragment extends DetailsFragment {
     private static final int ACTION_READ_MORE = 1;
     private static final int ACTION_ABOUT_US = 2;
     private static final int ACTION_RETURN_BACK = 3;
+    private static final int ACTION_MAIN_MENU = 4;
 
     private static final int DETAIL_THUMB_WIDTH = 480;
     private static final int DETAIL_THUMB_HEIGHT = 274;
@@ -145,6 +146,10 @@ public class ArticleDetailsFragment extends DetailsFragment {
                 new Action(
                         ACTION_RETURN_BACK,
                         getResources().getString(R.string.action_return_back)));
+        actionAdapter.add(
+                new Action(
+                        ACTION_MAIN_MENU,
+                        getResources().getString(R.string.action_main_menu)));
         row.setActionsAdapter(actionAdapter);
 
         mAdapter.add(row);
@@ -214,6 +219,9 @@ public class ArticleDetailsFragment extends DetailsFragment {
                     case ACTION_RETURN_BACK:
                         ArticleDetailsFragment.super.getActivity().onBackPressed();
                         break;
+                    case ACTION_MAIN_MENU:
+                        Intent i = new Intent(getActivity(), MainActivity.class);
+                        startActivity(i);
                 }
             }
         });
