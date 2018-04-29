@@ -24,6 +24,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -164,6 +165,8 @@ public class ShopItemDetailsFragment extends DetailsFragment {
                         setSelectedPosition(1);
                         break;
                     case ACTION_ADD_TO_CART:
+                        Toast.makeText(getActivity(), "Item added to the shopping cart", Toast.LENGTH_LONG)
+                                .show();
                         break;
                     case ACTION_RETURN_BACK:
                         ShopItemDetailsFragment.super.getActivity().onBackPressed();
