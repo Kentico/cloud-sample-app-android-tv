@@ -46,6 +46,11 @@
             android:theme="@style/Theme.Example.LeanbackDetails"/>
 
         <activity
+            android:name=".details.about.AboutDetailsActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Example.LeanbackDetails"/>
+
+        <activity
             android:name=".details.video.VideoActivity"
             android:exported="true"
             android:theme="@style/Theme.Leanback"

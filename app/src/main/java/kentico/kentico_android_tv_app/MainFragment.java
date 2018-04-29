@@ -31,9 +31,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import kentico.kentico_android_tv_app.data.models.About;
 import kentico.kentico_android_tv_app.data.models.Article;
 import kentico.kentico_android_tv_app.data.models.Cafe;
 import kentico.kentico_android_tv_app.data.models.ShopItem;
+import kentico.kentico_android_tv_app.details.about.AboutDetailsActivity;
 import kentico.kentico_android_tv_app.details.article.ArticleDetailsActivity;
 import kentico.kentico_android_tv_app.details.cafe.CafeDetailsActivity;
 import kentico.kentico_android_tv_app.details.shopItem.ShopItemDetailsActivity;
@@ -96,7 +98,7 @@ public class MainFragment extends BrowseFragment {
 
     private void setupUIElements() {
         setBadgeDrawable(getActivity().getResources().getDrawable(
-         R.drawable.main_logo_border));
+                R.drawable.main_logo_border));
 
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
@@ -167,6 +169,20 @@ public class MainFragment extends BrowseFragment {
 
                 int itemIndex = MainApplication.getCafesList().indexOf(item);
                 intent.putExtra(CafeDetailsActivity.CAFE, itemIndex);
+
+                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(),
+                        ((ImageCardView) itemViewHolder.view).getMainImageView(),
+                        CafeDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+                getActivity().startActivity(intent, bundle);
+
+            }
+
+            if (item instanceof About) {
+                Intent intent = new Intent(getActivity(), AboutDetailsActivity.class);
+
+                int itemIndex = MainApplication.getAboutList().indexOf(item);
+                intent.putExtra(AboutDetailsActivity.ABOUT, itemIndex);
 
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
