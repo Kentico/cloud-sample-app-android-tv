@@ -32,11 +32,18 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/extra_text"
+    <ScrollView
         style="@style/Widget.Leanback.DetailsDescriptionBodyStyle"
-        android:layout_width="match_parent"
-        android:fontFamily="sans-serif-regular"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/card_text"/>
+        android:scrollbars="vertical"
+        android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/extra_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:textColor="@color/card_text"/>
+    </ScrollView>
 </LinearLayout>
