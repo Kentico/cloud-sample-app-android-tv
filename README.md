@@ -1,3 +1,5 @@
+[![Analytics](https://ga-beacon.appspot.com/UA-69014260-4/Kentico/cloud-sample-app-android-tv?pixel)](https://github.com/igrigorik/ga-beacon)
+
 # Kentico Cloud Sample Application for Android TV
 <img align="right" width="200" src="https://i.imgur.com/lbl0sTZ.jpg" alt="Dancing Goat Sample App for Android TV" />
 A sample app for Android TV written in Java that utilizes the [KenticoCloudDeliveryJavaRxSDK](https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK) to manage and retrieve content
