@@ -1,5 +1,3 @@
-[![Analytics](https://ga-beacon.appspot.com/UA-69014260-4/Kentico/cloud-sample-app-android-tv?pixel)](https://github.com/igrigorik/ga-beacon)
-
 # Kentico Cloud Sample Application for Android TV
 <img align="right" width="200" src="https://i.imgur.com/lbl0sTZ.jpg" alt="Dancing Goat Sample App for Android TV" />
 A sample app for Android TV written in Java that utilizes the [KenticoCloudDeliveryJavaRxSDK](https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK) to manage and retrieve content
@@ -33,3 +31,5 @@ You can learn more about content editing with Kentico Cloud in the [documentatio
    
    `adb install <PATH_TO_.APK_FILE>`
 5. The TV has to be connected to the Internet in order to retrieve content from Kentico Cloud.
+
+![Analytics](https://kentico-ga-beacon.azurewebsites.net/api/UA-69014260-4/Kentico/cloud-sample-app-android-tv/?pixel)
