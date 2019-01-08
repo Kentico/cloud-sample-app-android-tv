@@ -1,5 +1,6 @@
 # Kentico Cloud Sample Application for Android TV
-<img align="right" width="200" src="https://i.imgur.com/lbl0sTZ.jpg" alt="Dancing Goat Sample App for Android TV" />
+<img align="right" width="450" src="https://i.imgur.com/lbl0sTZ.jpg" alt="Dancing Goat Sample App for Android TV" />
+
 A sample app for Android TV written in Java that utilizes the [KenticoCloudDeliveryJavaRxSDK](https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK) to manage and retrieve content
 You can register your account for free at https://app.kenticocloud.com.
 
